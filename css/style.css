@@ -2641,8 +2641,7 @@ img[loading="lazy"].img-loaded{
   overflow:visible;
 }
 .about-card-section .about-card:hover{
-  background:rgba(255,255,255,0.7);
-  box-shadow:0 4px 24px rgba(0,0,0,.06);
+  /* giftee: no bg change, no box-shadow on card hover */
 }
 
 /* Image — columns 1-6, spans all rows */
@@ -2692,15 +2691,26 @@ img[loading="lazy"].img-loaded{
 /* Arrow icon — columns 6-12 */
 .about-card-section .about-card__icon{
   grid-column:6 / 13;
-  color:var(--c-text);
   display:flex;
   align-items:center;
 }
-.about-card-section .about-card__icon svg{
-  transition:transform .3s ease;
+/* Arrow box — giftee: 80×53, borderRadius 13.3px */
+.about-card__arrow-box{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:clamp(56px,4.17vw,80px);
+  height:clamp(37px,2.76vw,53px);
+  border-radius:clamp(8px,.7vw,13.3px);
+  border:1px solid var(--c-border);
+  background:#fff;
+  color:var(--c-dark);
+  transition:background .35s var(--ease), border-color .35s var(--ease), color .35s var(--ease);
 }
-.about-card:hover .about-card__icon svg{
-  transform:translateX(6px);
+.about-card:hover .about-card__arrow-box{
+  background:var(--c-primary-dd);
+  border-color:var(--c-primary-dd);
+  color:#fff;
 }
 
 /* ==========================================================
@@ -2775,12 +2785,14 @@ img[loading="lazy"].img-loaded{
   transition:opacity .4s cubic-bezier(.39,.575,.565,1), transform .4s cubic-bezier(.23,1,.32,1);
 }
 .about-card-section [data-hover-img]:hover .about-card__circle img.loaded{
-  transform:scale(1.05);
+  transform:scale(1.1);
 }
 
-/* Arrow icon hover — slide right */
-.about-card-section [data-hover-img]:hover .about-card__icon svg{
-  transform:translateX(6px);
+/* Arrow box hover — green fill + white svg */
+.about-card-section [data-hover-img]:hover .about-card__arrow-box{
+  background:var(--c-primary-dd);
+  border-color:var(--c-primary-dd);
+  color:#fff;
 }
 
 /* ── About Page Responsive ── */
