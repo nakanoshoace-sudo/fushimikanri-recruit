@@ -31,7 +31,7 @@
   --ff-hero:'YuGothic Pr6N','Yu Gothic Pr6N','YuGothic','Yu Gothic','Hiragino Kaku Gothic ProN','Noto Sans JP',sans-serif;
   --gap:clamp(16px,2.4vw,40px);
   --wrap:1345px;
-  --sec-py:clamp(80px,8.3vw,120px);
+  --sec-py:clamp(80px,8.3vw,160px);  /* giftee: 160px */
   --ease:cubic-bezier(.19,1,.22,1);
   --ease-out-quint:cubic-bezier(.075,.82,.165,1);
   --dur:.55s;
@@ -390,7 +390,7 @@ small{font-size:.55em;font-weight:400}
 /* ==========================================================
    SECTIONS
    ========================================================== */
-.sec{padding:var(--sec-py) 0;position:relative;z-index:2;background:var(--c-bg);overflow:hidden}
+.sec{padding:var(--sec-py) 0;position:relative;z-index:2;background:transparent;overflow:hidden}
 .sec--about{} /* merged below */
 .sec--culture{} /* giftee style — defined in Culture block below */
 .sec--jobs{} /* giftee style — defined in Jobs block below */
@@ -406,7 +406,7 @@ small{font-size:.55em;font-weight:400}
 /* ── About — giftee style (full-bleed, no max-width) ── */
 .sec--about{
   background:transparent;  /* fixed canvas shows through */
-  padding:var(--sec-py) 0 clamp(48px,6vw,96px);
+  padding:var(--sec-py) 0;  /* giftee: 160px top & bottom */
   overflow:visible;
   position:relative;
   z-index:1;
@@ -424,7 +424,7 @@ small{font-size:.55em;font-weight:400}
 .about-title{
   grid-row:1;grid-column:1;
   font-family:var(--ff-head);
-  font-size:clamp(28px,2.8vw,40px);
+  font-size:clamp(28px,2.78vw,53px);  /* giftee: 53.33px */
   font-weight:600;
   letter-spacing:.04em;
   line-height:1.5;
@@ -719,6 +719,8 @@ small{font-size:.55em;font-weight:400}
 /* ── Jobs — giftee pixel-accurate (measured at 1920×945) ── */
 .sec--jobs{
   background:rgba(255,255,255,.4);  /* giftee: rgba(255,255,255,0.4) */
+  -webkit-backdrop-filter:blur(60px);
+  backdrop-filter:blur(60px);
   padding:clamp(80px,8.3vw,160px) 0; /* giftee: 160px top/bottom */
   overflow:visible;
   position:relative;
@@ -1008,7 +1010,9 @@ small{font-size:.55em;font-weight:400}
 
 /* ── FAQ — giftee style (category labels + accordion) ── */
 .sec--faq{
-  background:var(--c-white);
+  background:rgba(255,255,255,.4);
+  -webkit-backdrop-filter:blur(60px);
+  backdrop-filter:blur(60px);
   padding:clamp(60px,8vw,120px) clamp(20px,2.8vw,40px);
 }
 
@@ -1017,7 +1021,7 @@ small{font-size:.55em;font-weight:400}
 }
 .faq-page-title{
   font-family:var(--ff-head);
-  font-size:clamp(28px,2.8vw,40px);
+  font-size:clamp(28px,2.78vw,53px);  /* giftee: 53.33px */
   font-weight:600;
   color:var(--c-primary-dd);
   letter-spacing:.04em;
@@ -1153,7 +1157,7 @@ small{font-size:.55em;font-weight:400}
 
 /* ── Footer — giftee style (white bg, grid layout) ── */
 .footer{
-  background:var(--c-bg);
+  background:#fff;
   color:var(--c-dark);
   padding:clamp(48px,6vw,80px) clamp(20px,2.8vw,40px) clamp(24px,3vw,40px);
 }
