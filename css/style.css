@@ -1040,6 +1040,251 @@ small{font-size:.55em;font-weight:400}
   .ws-grid__content{padding:20px 0}
 }
 
+/* ══════════════════════════════════════════════════════════
+   NEWGRADS (中途採用) — giftee-exact: photo slider + cards
+   ══════════════════════════════════════════════════════════ */
+.sec--newgrads{
+  background:transparent;
+  padding:clamp(160px,13.9vw,267px) 0 var(--sec-py);
+  overflow:visible;
+  position:relative;
+  z-index:1;
+}
+
+/* Decorative circle (giftee: 1813×1813, x:-317, behind content) */
+.ng-deco-circle{
+  position:absolute;
+  top:clamp(100px,9.7vw,187px);
+  left:clamp(-300px,-16.5vw,-317px);
+  width:clamp(900px,94.4vw,1813px);
+  height:clamp(900px,94.4vw,1813px);
+  border-radius:9999px;
+  overflow:hidden;
+  pointer-events:none;
+  z-index:0;
+  background:radial-gradient(circle, rgba(91,168,153,.12) 0%, rgba(91,168,153,.04) 50%, transparent 70%);
+}
+
+.ng-inner{
+  position:relative;
+  z-index:1;
+}
+
+/* Title (giftee: 53.3px/600, x:53) */
+.ng-head{
+  display:grid;
+  grid-template-columns:auto 1fr;
+  gap:0 40px;
+  align-items:center;
+  padding:0 clamp(20px,2.8vw,53px);
+  margin-bottom:clamp(40px,4.2vw,80px);
+}
+.ng-title{
+  grid-row:1;grid-column:1;
+  font-family:var(--ff-head);
+  font-size:clamp(32px,2.78vw,53px);
+  font-weight:600;
+  letter-spacing:.04em;
+  line-height:1.15;
+  color:var(--c-primary-dd);
+  white-space:nowrap;
+}
+.ng-head__line{
+  grid-row:1;grid-column:2;
+  align-self:center;
+  height:1px;
+  background:var(--c-border);
+}
+
+/* ── Photo slider (giftee: infinite scroll left, 40s linear) ── */
+.ng-slider-wrap{
+  width:100%;
+  overflow:clip visible;
+  margin-bottom:clamp(40px,4.2vw,80px);
+}
+
+@keyframes ngSlide{
+  0%{transform:translateZ(0)}
+  100%{transform:translate3d(-50%,0,0)}
+}
+
+.ng-slider{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  animation:ngSlide 40s linear infinite;
+  will-change:transform;
+}
+
+.ng-slider__items{
+  display:flex;
+  align-items:flex-end;
+  gap:clamp(12px,1.4vw,27px);
+}
+
+/* 3 size variants (giftee: lg=640×427, sm=320×320, xl=800×533) */
+.ng-slider__item{
+  flex-shrink:0;
+  border-radius:clamp(6px,.5vw,10px);
+  overflow:hidden;
+}
+.ng-slider__item img{
+  width:100%;height:100%;
+  object-fit:cover;display:block;
+}
+.ng-slider__item--lg{
+  width:clamp(320px,33.3vw,640px);
+  height:clamp(213px,22.2vw,427px);
+  align-self:center;
+}
+.ng-slider__item--sm{
+  width:clamp(160px,16.7vw,320px);
+  height:clamp(160px,16.7vw,320px);
+  align-self:flex-end;
+}
+.ng-slider__item--xl{
+  width:clamp(400px,41.7vw,800px);
+  height:clamp(267px,27.8vw,533px);
+  align-self:flex-start;
+}
+
+/* ── Bottom grid (giftee: 2col 872px, gap 53px) ── */
+.ng-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:clamp(24px,2.78vw,53px);
+  padding:0 clamp(20px,2.8vw,53px);
+}
+
+.ng-grid__lead{
+  grid-column:1/2;
+  grid-row:1/2;
+  font-size:clamp(14px,1.11vw,21px);
+  line-height:1.9;
+  color:var(--c-gray);
+}
+
+.ng-grid__link{
+  grid-column:2/3;
+  grid-row:1/2;
+  display:flex;
+  align-items:flex-start;
+  justify-content:flex-end;
+}
+
+.ng-grid__cards{
+  grid-column:1/2;
+  grid-row:2/3;
+  display:flex;
+  gap:clamp(16px,1.4vw,27px);
+}
+
+.ng-grid__interview{
+  grid-column:2/3;
+  grid-row:2/3;
+}
+
+/* Job card (giftee: 410×280, bg blur card) */
+.ng-job-card{
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  gap:clamp(8px,.7vw,12px);
+  width:clamp(200px,21.4vw,410px);
+  min-height:clamp(160px,14.6vw,280px);
+  padding:clamp(16px,1.4vw,27px) clamp(20px,1.8vw,35px);
+  background:rgba(255,255,255,.4);
+  -webkit-backdrop-filter:blur(20px);
+  backdrop-filter:blur(20px);
+  border-radius:clamp(8px,.7vw,13px);
+  text-decoration:none;
+  position:relative;
+  transition:background .3s ease;
+}
+.ng-job-card::after{
+  content:"";display:block;position:absolute;top:0;left:0;
+  width:calc(100% + 2px);height:calc(100% + 2px);
+  border-radius:clamp(8px,.7vw,13px);pointer-events:none;
+  border:1px solid var(--c-primary);margin:-1px;opacity:0;
+  transition:opacity .4s cubic-bezier(.19,1,.22,1);
+}
+.ng-job-card:hover::after{
+  opacity:1;
+  transition:opacity .5s cubic-bezier(.39,.575,.565,1);
+}
+.ng-job-card__position{
+  font-size:clamp(12px,.83vw,16px);
+  font-weight:500;
+  color:var(--c-gray);
+  margin:0;
+}
+.ng-job-card__title{
+  font-family:var(--ff-head);
+  font-size:clamp(18px,1.39vw,27px);
+  font-weight:600;
+  color:var(--c-dark);
+  line-height:1.3;
+}
+.ng-job-card__desc{
+  font-size:clamp(12px,.83vw,16px);
+  line-height:1.75;
+  color:var(--c-gray);
+  margin:0;
+}
+
+/* Interview link (giftee: 873×280, image + title) */
+.ng-interview-link{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:16px;
+  width:100%;
+  min-height:clamp(160px,14.6vw,280px);
+  background:rgba(255,255,255,.4);
+  -webkit-backdrop-filter:blur(20px);
+  backdrop-filter:blur(20px);
+  border-radius:clamp(8px,.7vw,13px);
+  text-decoration:none;
+  position:relative;
+  transition:background .3s ease;
+}
+.ng-interview-link::after{
+  content:"";display:block;position:absolute;top:0;left:0;
+  width:calc(100% + 2px);height:calc(100% + 2px);
+  border-radius:clamp(8px,.7vw,13px);pointer-events:none;
+  border:1px solid var(--c-primary);margin:-1px;opacity:0;
+  transition:opacity .4s cubic-bezier(.19,1,.22,1);
+}
+.ng-interview-link:hover::after{
+  opacity:1;
+  transition:opacity .5s cubic-bezier(.39,.575,.565,1);
+}
+.ng-interview-link__label{
+  font-family:var(--ff-head);
+  font-size:clamp(18px,1.39vw,27px);
+  font-weight:600;
+  color:var(--c-dark);
+}
+.ng-interview-link__arrow{
+  font-family:var(--ff-en);
+  font-size:clamp(18px,1.4vw,24px);
+  font-weight:300;
+  color:var(--c-accent);
+  transition:transform .35s var(--ease);
+}
+.ng-interview-link:hover .ng-interview-link__arrow{transform:translateX(4px)}
+
+@media(max-width:767px){
+  .ng-head{grid-template-columns:1fr;gap:12px}
+  .ng-head__line{display:none}
+  .ng-slider__item--lg{width:280px;height:187px}
+  .ng-slider__item--sm{width:180px;height:180px}
+  .ng-slider__item--xl{width:360px;height:240px}
+  .ng-grid{grid-template-columns:1fr;gap:24px}
+  .ng-grid__lead,.ng-grid__link,.ng-grid__cards,.ng-grid__interview{grid-column:1;grid-row:auto}
+  .ng-grid__cards{flex-direction:column}
+  .ng-job-card{width:100%}
+}
+
 /* ── FAQ — giftee style (category labels + accordion) ── */
 .sec--faq{
   background:rgba(255,255,255,.4);
