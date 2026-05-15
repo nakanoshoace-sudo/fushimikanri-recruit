@@ -270,8 +270,26 @@ small{font-size:.55em;font-weight:400}
   font-weight:400;
   color:var(--c-dark);letter-spacing:1.8px;
   transition:color .3s;white-space:nowrap;
+  position:relative;
+  overflow:hidden;
+  padding:clamp(4px,.3vw,6px) clamp(8px,.6vw,12px);
+  border-radius:6px;
 }
-.hero-sidenav a:hover{color:var(--c-primary)}
+/* Slide-in background on hover — sweeps from bottom-left to top-right */
+.hero-sidenav a::after{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:rgba(91,168,153,.1);
+  border-radius:inherit;
+  transform:translate(-101%,101%);
+  transition:transform .45s cubic-bezier(.19,1,.22,1);
+  z-index:-1;
+}
+.hero-sidenav a:hover::after{
+  transform:translate(0,0);
+}
+.hero-sidenav a:hover{color:var(--c-primary-dd)}
 
 /* ── RIGHT TOP: CTA Buttons — giftee: left 85.3vw, top 5.6vh ── */
 .hero-right-col{
@@ -1912,6 +1930,11 @@ img[loading="lazy"].img-loaded{
 .sub-top-nav .hero-sidenav a{
   position:relative;
   padding-left:clamp(16px,1.2vw,22px);
+  overflow:hidden;
+}
+/* Override ::after for sub-top-nav (needs higher z) */
+.sub-top-nav .hero-sidenav a::after{
+  z-index:0;
 }
 .sub-top-nav .hero-sidenav a::before{
   content:'';
