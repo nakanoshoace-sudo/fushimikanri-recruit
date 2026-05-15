@@ -98,28 +98,53 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  /* ── Scroll reveal ── */
+  /* ── Scroll reveal (dual: IO + scroll fallback) ── */
   const allAnimUp = document.querySelectorAll('.anim-up');
   allAnimUp.forEach((el, i) => {
     el.style.transitionDelay = `${Math.min((i % 6) * 0.07, 0.42)}s`;
   });
 
+  const reveal = (el) => {
+    if (!el.classList.contains('visible')) el.classList.add('visible');
+  };
+
+  // Primary: IntersectionObserver (works even without user scroll)
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          reveal(entry.target);
+          io.unobserve(entry.target);
+        }
+      });
+    }, { rootMargin: '0px 0px 120px 0px', threshold: 0 });
+    allAnimUp.forEach(el => io.observe(el));
+  }
+
+  // Fallback: scroll-based check
   const revealCheck = () => {
     const vh = window.innerHeight;
     allAnimUp.forEach(el => {
       if (el.classList.contains('visible')) return;
       const rect = el.getBoundingClientRect();
-      if (rect.top < vh + 80 && rect.bottom > -80) {
-        el.classList.add('visible');
+      if (rect.top < vh + 120 && rect.bottom > -120) {
+        reveal(el);
       }
     });
   };
   window.addEventListener('scroll', revealCheck, { passive: true });
   window.addEventListener('resize', revealCheck, { passive: true });
-  // Initial check + delayed fallback
   revealCheck();
   setTimeout(revealCheck, 600);
   setTimeout(revealCheck, 1500);
+
+  // Emergency fallback: if after 3s nothing revealed, show everything
+  setTimeout(() => {
+    const visible = document.querySelectorAll('.anim-up.visible').length;
+    if (visible === 0) {
+      allAnimUp.forEach(el => reveal(el));
+    }
+  }, 3000);
 
   /* ── Smooth scroll ── */
   document.querySelectorAll('a[href^="#"]').forEach(a => {
