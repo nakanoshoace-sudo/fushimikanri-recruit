@@ -1,4 +1,4 @@
-/* ==========================================================
+﻿/* ==========================================================
    伏見管理サービス 採用サイト  —  CSS v6 (giftee pixel-perfect)
    Theme : Opal Green  |  Model : careers.giftee.co.jp
    ========================================================== */
@@ -25,11 +25,12 @@
   --c-border-l:#eee;
   --c-bg:#FAFBFA;
   --c-white:#fff;
-  --ff-head:'A P-OTF 見出ゴMB31 Pr6N B','A-OTF 見出ゴMB31 Pr6N','MiGoMB1Std-DeBold','MFW-MiGoMB1Std-DeBold','YuGothic Pr6N','Yu Gothic Pr6N','Hiragino Kaku Gothic ProN','Noto Sans JP',sans-serif;
+  --ff-head:'A P-OTF 見出ゴMB1 StdN DB','A-OTF 見出ゴMB1 Std','MidashiGoMB1StdN-DB','YuGothic Pr6N','Yu Gothic Pr6N','Hiragino Kaku Gothic ProN','Noto Sans JP',sans-serif;
   --ff:'YuGothic Pr6N','Yu Gothic Pr6N','YuGothic','Yu Gothic','Hiragino Kaku Gothic ProN','Noto Sans JP',sans-serif;
   --ff-en:'Geist','Inter',sans-serif;
-  --ff-hero:'A P-OTF 見出ゴMB31 Pr6N B','A-OTF 見出ゴMB31 Pr6N','MiGoMB1Std-DeBold','MFW-MiGoMB1Std-DeBold','YuGothic Pr6N','Yu Gothic Pr6N','Hiragino Kaku Gothic ProN','Noto Sans JP',sans-serif;
+  --ff-hero:'A P-OTF 見出ゴMB1 StdN DB','A-OTF 見出ゴMB1 Std','MidashiGoMB1StdN-DB','YuGothic Pr6N','Yu Gothic Pr6N','Hiragino Kaku Gothic ProN','Noto Sans JP',sans-serif;
   --gap:clamp(16px,2.4vw,40px);
+  --title-stretch:0.75;  /* 75% condensed for titles */
   --wrap:1345px;
   --sec-py:clamp(80px,8.3vw,160px);  /* giftee: 160px */
   --ease:cubic-bezier(.19,1,.22,1);
@@ -276,6 +277,8 @@ small{font-size:.55em;font-weight:400}
   font-weight:600;line-height:1.15;
   letter-spacing:1.7px;color:var(--c-black);
   margin-bottom:clamp(24px,4vh,52px);  /* giftee: ~53px gap between lead and desc */
+  transform:scaleX(var(--title-stretch));
+  transform-origin:left;
 }
 .hero-lead__accent{color:var(--c-primary-d)}
 .hero-desc{max-width:27.6vw}
@@ -328,7 +331,8 @@ small{font-size:.55em;font-weight:400}
   color:#1a1a1a;
   opacity:0;
   filter:blur(12px);
-  transform:translateY(30px);
+  transform:scaleX(var(--title-stretch)) translateY(30px);
+  transform-origin:center;
   transition:
     opacity 2.6s var(--ease),
     filter 2.6s var(--ease),
@@ -337,7 +341,7 @@ small{font-size:.55em;font-weight:400}
 .vchar.vchar--in{
   opacity:1;
   filter:blur(0);
-  transform:translateY(0);
+  transform:scaleX(var(--title-stretch)) translateY(0);
 }
 
 /* Accent color transition for "探求" */
@@ -399,7 +403,7 @@ small{font-size:.55em;font-weight:400}
 .sec--positions{} /* giftee style — defined in Positions block below */
 
 .sec-head{margin-bottom:clamp(36px,5vw,56px)}
-.sec-title{position:relative;display:inline-block;font-size:clamp(28px,4.2vw,48px);font-weight:900;letter-spacing:.06em;line-height:1.15;color:var(--c-primary-dd)}
+.sec-title{position:relative;display:inline-block;font-size:clamp(28px,4.2vw,48px);font-weight:900;letter-spacing:.06em;line-height:1.15;color:var(--c-primary-dd);transform:scaleX(var(--title-stretch));transform-origin:left}
 .sec-title::before{content:attr(data-en);display:block;font-family:var(--ff-en);font-size:clamp(10px,1vw,12px);font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--c-primary);margin-bottom:6px}
 .sec-lead{max-width:640px;font-size:14px;line-height:2;color:var(--c-gray);margin-bottom:clamp(28px,4vw,44px)}
 
@@ -430,6 +434,8 @@ small{font-size:.55em;font-weight:400}
   line-height:1.15;
   color:var(--c-primary-dd);
   white-space:nowrap;
+  transform:scaleX(var(--title-stretch));
+  transform-origin:left;
 }
 .about-top__line{
   grid-row:1;grid-column:2;
@@ -628,6 +634,8 @@ small{font-size:.55em;font-weight:400}
   letter-spacing:.04em;
   line-height:1.15;
   color:var(--c-primary-dd);
+  transform:scaleX(var(--title-stretch));
+  transform-origin:left;
 }
 
 /* 2-col grid — giftee: 2×872.5px, gap 53.3px, 2 rows (228px + 447px) */
@@ -739,6 +747,8 @@ small{font-size:.55em;font-weight:400}
   letter-spacing:.04em;
   line-height:1.15;
   color:var(--c-primary-dd);
+  transform:scaleX(var(--title-stretch));
+  transform-origin:left;
 }
 
 /* Upper: 2-col grid — left photo + right text/btn */
@@ -914,6 +924,8 @@ small{font-size:.55em;font-weight:400}
   font-weight:600;
   letter-spacing:2px;
   color:var(--c-primary-dd);
+  transform:scaleX(var(--title-stretch));
+  transform-origin:left;
 }
 
 /* 3-row grid — giftee: left img at 2.8vw (608px), right content starts at 51vw (979px) */
@@ -1027,6 +1039,8 @@ small{font-size:.55em;font-weight:400}
   color:var(--c-primary-dd);
   letter-spacing:.04em;
   margin-bottom:clamp(12px,1.5vw,20px);
+  transform:scaleX(var(--title-stretch));
+  transform-origin:left;
 }
 .faq-page-lead{
   font-size:16px;
@@ -1112,6 +1126,8 @@ small{font-size:.55em;font-weight:400}
   line-height:1.15;
   color:#fff;
   margin-bottom:clamp(12px,1.5vw,20px);
+  transform:scaleX(var(--title-stretch));
+  transform-origin:left center;
 }
 .positions-lead{
   font-size:16px;
