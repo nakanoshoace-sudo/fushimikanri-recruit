@@ -265,11 +265,195 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     window.addEventListener('scroll', onParallax, { passive: true });
   }
+  /* ══════════════════════════════════════════════════════════
+     12. NOISE PLATE — giftee astro-noise-plate reproduction
+     ══════════════════════════════════════════════════════════ */
+  const noiseCanvas = document.querySelector('.noise-canvas');
+  if (noiseCanvas) {
+    // Delay until hero animations are underway
+    setTimeout(() => {
+      noisePlateAnimate(noiseCanvas, {
+        width: 100,
+        height: 200,
+        durationMs: 1000,
+        delayMs: 1500,
+        startHex: '#1a3d36', // dark opal green
+        endHex: '#5BA899',   // opal green primary
+      });
+    }, 0);
+  }
 });
 
 /* ══════════════════════════════════════════════════════════
-   HERO CANVAS — animated gradient blobs
+   NOISE PLATE — Canvas 2D Perlin noise color transition
+   (giftee astro-noise-plate exact reproduction)
    ══════════════════════════════════════════════════════════ */
+function noisePlateAnimate(canvas, opts) {
+  const w = opts.width ?? 100;
+  const h = opts.height ?? 200;
+  const dur = opts.durationMs ?? 1800;
+  const delay = opts.delayMs ?? 0;
+  const startHex = opts.startHex ?? '#341103';
+  const endHex = opts.endHex ?? '#e76746';
+
+  const ctx = canvas.getContext('2d');
+  if (!ctx) return;
+
+  const dpr = Math.max(1, Math.floor(window.devicePixelRatio || 1));
+  canvas.style.width = w + 'px';
+  canvas.style.height = h + 'px';
+  canvas.width = w * dpr;
+  canvas.height = h * dpr;
+
+  const W = canvas.width;
+  const H = canvas.height;
+  const startC = hexToRgb(startHex);
+  const endC = hexToRgb(endHex);
+
+  ctx.fillStyle = startHex;
+  ctx.fillRect(0, 0, W, H);
+
+  const imgData = ctx.createImageData(W, H);
+  const pixels = imgData.data;
+
+  // Pre-compute noise field (2D fbm)
+  const noiseField = new Float32Array(W * H);
+  const seed1 = Math.random() * 1e9 | 0;
+  const scale = 3.2;
+  for (let y = 0; y < H; y++) {
+    const ny = y / H * scale;
+    for (let x = 0; x < W; x++) {
+      const nx = x / W * scale;
+      noiseField[y * W + x] = fbm2d(nx, ny, seed1, 4);
+    }
+  }
+
+  const startTime = performance.now() + delay;
+  const seed2 = Math.random() * 1e9 | 0;
+  const thresh = 0.035;
+
+  function frame(now) {
+    const elapsed = now - startTime;
+    if (elapsed < 0) { requestAnimationFrame(frame); return; }
+
+    const t = clamp01(elapsed / dur);
+    const noiseAmp = smoothstep(0.05, 0.35, t) * (1 - smoothstep(0.8, 1, t));
+    const time3d = now * 0.001;
+    const timeZ = time3d * 0.55;
+
+    let idx = 0;
+    for (let y = 0; y < H; y++) {
+      const ny = y / H * 6;
+      for (let x = 0; x < W; x++) {
+        const nx = x / W * 6;
+        const nVal = noiseField[idx];
+        const lerp = 1 - smoothstep(t - thresh, t + thresh, nVal);
+        const r = mix(startC.r, endC.r, lerp);
+        const g = mix(startC.g, endC.g, lerp);
+        const b = mix(startC.b, endC.b, lerp);
+
+        // Animated 3D noise for shimmer
+        const shimmer = (fbm3d(nx, ny, timeZ, seed2, 4) - 0.5) * 2 * (36 * noiseAmp);
+
+        pixels[idx * 4 + 0] = clampByte(r + shimmer);
+        pixels[idx * 4 + 1] = clampByte(g + shimmer);
+        pixels[idx * 4 + 2] = clampByte(b + shimmer);
+        pixels[idx * 4 + 3] = 255;
+        idx++;
+      }
+    }
+
+    ctx.putImageData(imgData, 0, 0);
+
+    if (t < 1) {
+      requestAnimationFrame(frame);
+    } else {
+      ctx.fillStyle = endHex;
+      ctx.fillRect(0, 0, W, H);
+      // Fade out the canvas after animation completes
+      canvas.style.transition = 'opacity 0.6s ease';
+      canvas.style.opacity = '0';
+    }
+  }
+
+  requestAnimationFrame(frame);
+}
+
+// ── Noise helpers ──
+function fbm2d(x, y, seed, octaves) {
+  let sum = 0, amp = 0.5, freq = 1, total = 0;
+  for (let i = 0; i < octaves; i++) {
+    sum += amp * noise2d(x * freq, y * freq, seed + i * 1013);
+    total += amp;
+    amp *= 0.5;
+    freq *= 2;
+  }
+  return sum / total;
+}
+function fbm3d(x, y, z, seed, octaves) {
+  let sum = 0, amp = 0.5, freq = 1, total = 0;
+  for (let i = 0; i < octaves; i++) {
+    sum += amp * noise3d(x * freq, y * freq, z * freq, seed + i * 1013);
+    total += amp;
+    amp *= 0.5;
+    freq *= 2;
+  }
+  return sum / total;
+}
+function noise2d(x, y, seed) {
+  const ix = Math.floor(x), iy = Math.floor(y);
+  const fx = smootherstep(x - ix), fy = smootherstep(y - iy);
+  const a = hash2d(ix, iy, seed), b = hash2d(ix + 1, iy, seed);
+  const c = hash2d(ix, iy + 1, seed), d = hash2d(ix + 1, iy + 1, seed);
+  return mix(mix(a, b, fx), mix(c, d, fx), fy);
+}
+function noise3d(x, y, z, seed) {
+  const ix = Math.floor(x), iy = Math.floor(y), iz = Math.floor(z);
+  const fx = smootherstep(x - ix), fy = smootherstep(y - iy), fz = smootherstep(z - iz);
+  const a = hash3d(ix, iy, iz, seed), b = hash3d(ix+1, iy, iz, seed);
+  const c = hash3d(ix, iy+1, iz, seed), d = hash3d(ix+1, iy+1, iz, seed);
+  const e = hash3d(ix, iy, iz+1, seed), f = hash3d(ix+1, iy, iz+1, seed);
+  const g = hash3d(ix, iy+1, iz+1, seed), h = hash3d(ix+1, iy+1, iz+1, seed);
+  const ab = mix(a, b, fx), cd = mix(c, d, fx);
+  const ef = mix(e, f, fx), gh = mix(g, h, fx);
+  return mix(mix(ab, cd, fy), mix(ef, gh, fy), fz);
+}
+function hash2d(x, y, seed) {
+  let h = seed | 0;
+  h ^= Math.imul(x, 374761393);
+  h ^= Math.imul(y, 668265263);
+  h = hashMix(h);
+  return (h & 0x0FFFFFFF) / 0x10000000;
+}
+function hash3d(x, y, z, seed) {
+  let h = seed | 0;
+  h ^= Math.imul(x, 374761393);
+  h ^= Math.imul(y, 668265263);
+  h ^= Math.imul(z, 2147483647);
+  h = hashMix(h);
+  return (h & 0x0FFFFFFF) / 0x10000000;
+}
+function hashMix(v) {
+  v ^= v >>> 16;
+  v = Math.imul(v, 2146121005);
+  v ^= v >>> 15;
+  v = Math.imul(v, 2221713035);
+  v ^= v >>> 16;
+  return v >>> 0;
+}
+function smootherstep(t) { return t * t * t * (t * (t * 6 - 15) + 10); }
+function hexToRgb(hex) {
+  const h = hex.replace('#', '').trim();
+  const v = h.length === 3 ? parseInt(h.split('').map(c => c + c).join(''), 16) : parseInt(h, 16);
+  return { r: (v >> 16) & 255, g: (v >> 8) & 255, b: v & 255 };
+}
+function clamp01(t) { return t < 0 ? 0 : t > 1 ? 1 : t; }
+function clampByte(v) { return v < 0 ? 0 : v > 255 ? 255 : v | 0; }
+function mix(a, b, t) { return a + (b - a) * t; }
+function smoothstep(edge0, edge1, x) {
+  const t = clamp01((x - edge0) / (edge1 - edge0));
+  return t * t * (3 - 2 * t);
+}
 function heroCanvas(canvas) {
   const ctx = canvas.getContext('2d');
   if (!ctx) return;

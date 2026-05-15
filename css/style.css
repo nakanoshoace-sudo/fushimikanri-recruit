@@ -2419,3 +2419,23 @@ html.is-animating {
 html.is-animating body {
   overflow: hidden;
 }
+
+/* ── Noise Plate (giftee astro-noise-plate) ── */
+.vchar--noise-wrap{
+  position:relative;
+}
+.noise-overlay{
+  position:absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height:200%;
+  z-index:2;
+  pointer-events:none;
+  overflow:hidden;
+}
+.noise-canvas{
+  display:block;
+  width:100%;
+  height:100%;
+}

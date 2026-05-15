@@ -248,6 +248,17 @@
         img.addEventListener('error', markLoaded, { once: true });
       }
     });
+
+    // Noise plate re-init
+    const noiseCanvas = document.querySelector('.noise-canvas');
+    if (noiseCanvas && typeof noisePlateAnimate === 'function') {
+      noiseCanvas.style.opacity = '1';
+      noisePlateAnimate(noiseCanvas, {
+        width: 100, height: 200,
+        durationMs: 1000, delayMs: 1500,
+        startHex: '#1a3d36', endHex: '#5BA899',
+      });
+    }
   }
 
   // Log transitions
