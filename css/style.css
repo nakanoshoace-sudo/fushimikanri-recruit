@@ -3206,3 +3206,232 @@ html.is-animating body {
 @media(max-width:767px){
   .ngp-interview__grid{grid-template-columns:1fr}
 }
+
+/* ================================================================
+   JOBS PAGE — .jobs-pg-* (giftee /jobs/ pixel-perfect)
+   Measured at 1920×945 viewport
+   ================================================================ */
+
+/* ── Hero intro (desc left + photo right) ── */
+.jobs-pg-hero{
+  padding:0 53px 0 320px; /* giftee: container padding */
+}
+.jobs-pg-hero__inner{
+  display:grid;
+  grid-template-columns:1fr auto;
+  align-items:start;
+  gap:53px;
+}
+.jobs-pg-hero__desc{
+  font-size:21.33px;
+  line-height:1.9;
+  padding-top:125px; /* giftee: text y:558 - section y:427 = 131, adjusted for line-height */
+  max-width:739px;   /* giftee: desc w:739 */
+}
+.jobs-pg-hero__photo{
+  width:607px;
+  height:304px;
+  overflow:hidden;
+  border-radius:0;
+  flex-shrink:0;
+}
+.jobs-pg-hero__photo img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+/* ── Filter label ── */
+.jobs-pg-cards{
+  padding:0 53px 0 320px; /* giftee: same container padding */
+}
+.jobs-pg-cards__inner{
+  max-width:1532px; /* giftee: 1852-320=1532 */
+}
+.jobs-pg-cards__filter{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  font-size:16px;
+  font-weight:400;
+  margin-top:100px;  /* push cards down to match giftee y:890 */
+  margin-bottom:27px;
+}
+.jobs-pg-cards__filter-count{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:26px;
+  height:26px;
+  border-radius:50%;
+  background:var(--c-primary-dd);
+  color:#fff;
+  font-size:13px;
+  font-weight:600;
+}
+
+/* ── Card grid (3col, giftee-exact) ── */
+.jobs-pg-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr); /* giftee: 475px × 3 */
+  gap:53px; /* giftee: 53.33px */
+}
+
+/* ── Individual card ── */
+.jobs-pg-card{
+  display:flex;
+  flex-direction:column;
+  gap:27px; /* giftee: 26.67px */
+  padding:53px; /* giftee: 53.33px */
+  background:rgba(255,255,255,.4);
+  border-radius:13.3px;
+  text-decoration:none;
+  color:var(--c-dark);
+  position:relative;
+  transition:background .3s var(--ease);
+}
+/* ::after border overlay (giftee hover pattern) */
+.jobs-pg-card::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  border:1px solid rgba(0,0,0,.08);
+  border-radius:13.3px;
+  pointer-events:none;
+  transition:opacity .4s var(--ease);
+}
+.jobs-pg-card:hover::after{opacity:0}
+
+/* Card head: title + arrow */
+.jobs-pg-card__head{
+  display:flex;
+  align-items:center;
+  gap:13px; /* giftee: 13.33px */
+}
+.jobs-pg-card__head h3{
+  font-family:var(--ff-head);
+  font-size:27px; /* giftee: 26.67px */
+  font-weight:600;
+  line-height:1.7;
+}
+.jobs-pg-card__arrow{
+  font-size:21px;
+  color:var(--c-primary-dd);
+  transition:transform .4s var(--ease);
+}
+.jobs-pg-card:hover .jobs-pg-card__arrow{
+  transform:translateX(4px);
+}
+
+/* Card description */
+.jobs-pg-card__desc{
+  font-size:19px; /* giftee: 18.67px */
+  line-height:1.85; /* giftee: 34.53/18.67 ≈ 1.85 */
+  color:var(--c-dark);
+}
+
+/* Card tags */
+.jobs-pg-card__tags{
+  display:flex;
+  flex-wrap:wrap;
+  gap:7px; /* giftee: 6.67px */
+  margin-top:auto;
+}
+.jobs-pg-card__tag{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding:0 13px;
+  height:40px; /* giftee: 40px */
+  font-size:13px; /* giftee: 13.33px */
+  border:1px solid rgba(0,0,0,.15);
+  border-radius:7px; /* giftee: 6.67px */
+  white-space:nowrap;
+}
+
+/* ── FAQ section (giftee-exact: 2col layout) ── */
+.jobs-pg-faq{
+  background:rgba(255,255,255,.4);
+  padding:160px 53px; /* giftee: paddingBlock-80-120 → 160px 53px */
+}
+.jobs-pg-faq__inner{
+  max-width:1852px;
+}
+.jobs-pg-faq__h2{
+  font-family:var(--ff-head);
+  font-size:48px; /* giftee: 48px */
+  font-weight:600;
+  line-height:1.54; /* giftee: 74/48 ≈ 1.54 */
+  margin-bottom:107px; /* giftee: faqH2 y:2101, first cat y:2282, gap=181-74=107 */
+}
+
+/* FAQ group: 2-column (sticky label left + accordion right) */
+.jobs-pg-faq__group{
+  display:grid;
+  grid-template-columns:242px 1fr; /* giftee: label w:242, items start x:582 */
+  column-gap:287px; /* giftee: 582 - 53 - 242 = 287 */
+  margin-bottom:80px;
+}
+.jobs-pg-faq__group:last-child{margin-bottom:0}
+
+/* Category label (sticky) */
+.jobs-pg-faq__cat{
+  font-family:var(--ff-head);
+  font-size:32px; /* giftee: 32px */
+  font-weight:600;
+  line-height:1;
+  background:#fff;
+  border-radius:13.3px;
+  padding:20px 24px;
+  position:sticky;
+  top:120px;
+  height:fit-content;
+  white-space:nowrap;
+}
+
+/* Accordion items */
+.jobs-pg-faq__items{
+  display:flex;
+  flex-direction:column;
+  gap:27px; /* giftee: item gap ≈ 2406-2282-97 = 27 */
+}
+.jobs-pg-faq__item{
+  border:1px solid rgba(0,0,0,.15);
+  border-radius:13.3px;
+  overflow:hidden;
+}
+.jobs-pg-faq__item summary{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:27px 40px; /* giftee: item h:97, font:21px → padding ~27px */
+  font-size:21px;
+  font-weight:400;
+  line-height:1.9;
+  cursor:pointer;
+  list-style:none;
+  position:relative;
+}
+.jobs-pg-faq__item summary::-webkit-details-marker{display:none}
+.jobs-pg-faq__item summary::after{
+  content:"";
+  width:24px;
+  height:24px;
+  border-right:2px solid currentColor;
+  border-bottom:2px solid currentColor;
+  transform:rotate(45deg);
+  transform-origin:center;
+  transition:transform .3s var(--ease);
+  flex-shrink:0;
+  margin-left:20px;
+  opacity:.4;
+}
+.jobs-pg-faq__item[open] summary::after{
+  transform:rotate(-135deg);
+}
+.jobs-pg-faq__answer{
+  padding:0 40px 27px;
+  font-size:18px;
+  line-height:1.9;
+  color:rgba(0,0,0,.7);
+}
