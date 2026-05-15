@@ -22,17 +22,13 @@
     { x: 0.00, y: 0.00,  size: 0.00, opacity: 0,   lensWeight: 0,    grad: 0 },  // White — disabled
   ];
 
-  // ── Subpage detection: shift circles to top-right ──
+  // ── Subpage detection: camera shifts to top-right (circles appear to move to bottom-left) ──
   const isSubpage = document.documentElement.classList.contains('page--sub');
-  // TOP: A at (0.02, 0.083)  →  SUB: A shifts to (0.45, -0.15) = right-upper
-  const ITEMS_SUB = [
-    { x: 0.45, y: -0.15, size: 0.65, opacity: 1,   lensWeight: 1,    grad: 0 },
-    { x: 0.00, y: 0.00,  size: 0.00, opacity: 0,   lensWeight: 0,    grad: 0 },
-    { x: 0.50, y: 1.20,  size: 0.70, opacity: 0.6, lensWeight: 0.25, grad: 1 },
-    { x: 0.00, y: 0.00,  size: 0.00, opacity: 0,   lensWeight: 0,    grad: 0 },
-  ];
-  // Use subpage positions if on subpage
-  const activeItems = isSubpage ? ITEMS_SUB : ITEMS;
+  // Camera offset: on subpages, shift viewpoint right+up → circles appear left+down
+  // In GL coords: offset.x positive = camera right (circles shift left), offset.y positive = camera up (circles shift down)
+  const cameraOffset = { x: 0, y: 0 };
+  const cameraOffsetTarget = { x: 0, y: 0 };
+  const CAM_OFFSET_SUB = { x: 0.25, y: 0.20 };  // how far camera moves on subpages
 
   // ── Shaders ──
   const vertexShader = `
@@ -281,27 +277,27 @@
     u_noiseSize:           { value: 1.35 },
     u_aspectRatio:         { value: 1 },
     // Circle A
-    u_sizeA:        { value: activeItems[0].size },
-    u_opacityA:     { value: activeItems[0].opacity },
-    u_lensWeightA:  { value: activeItems[0].lensWeight },
-    u_gradA:        { value: activeItems[0].grad },
-    u_circleCenter: { value: new THREE.Vector2(activeItems[0].x + activeItems[0].size*0.5, activeItems[0].y + activeItems[0].size*0.5) },
+    u_sizeA:        { value: ITEMS[0].size },
+    u_opacityA:     { value: ITEMS[0].opacity },
+    u_lensWeightA:  { value: ITEMS[0].lensWeight },
+    u_gradA:        { value: ITEMS[0].grad },
+    u_circleCenter: { value: new THREE.Vector2(ITEMS[0].x + ITEMS[0].size*0.5, ITEMS[0].y + ITEMS[0].size*0.5) },
     // Circle B
-    u_sizeB:         { value: activeItems[1].size },
-    u_opacityB:      { value: activeItems[1].opacity },
-    u_lensWeightB:   { value: activeItems[1].lensWeight },
-    u_gradB:         { value: activeItems[1].grad },
-    u_circleCenter2: { value: new THREE.Vector2(activeItems[1].x + activeItems[1].size*0.5, activeItems[1].y + activeItems[1].size*0.5) },
+    u_sizeB:         { value: ITEMS[1].size },
+    u_opacityB:      { value: ITEMS[1].opacity },
+    u_lensWeightB:   { value: ITEMS[1].lensWeight },
+    u_gradB:         { value: ITEMS[1].grad },
+    u_circleCenter2: { value: new THREE.Vector2(ITEMS[1].x + ITEMS[1].size*0.5, ITEMS[1].y + ITEMS[1].size*0.5) },
     // Circle C
-    u_sizeC:         { value: activeItems[2].size },
-    u_opacityC:      { value: activeItems[2].opacity },
-    u_lensWeightC:   { value: activeItems[2].lensWeight },
-    u_gradC:         { value: activeItems[2].grad },
-    u_circleCenter3: { value: new THREE.Vector2(activeItems[2].x + activeItems[2].size*0.5, activeItems[2].y + activeItems[2].size*0.5) },
+    u_sizeC:         { value: ITEMS[2].size },
+    u_opacityC:      { value: ITEMS[2].opacity },
+    u_lensWeightC:   { value: ITEMS[2].lensWeight },
+    u_gradC:         { value: ITEMS[2].grad },
+    u_circleCenter3: { value: new THREE.Vector2(ITEMS[2].x + ITEMS[2].size*0.5, ITEMS[2].y + ITEMS[2].size*0.5) },
     // White circle
-    u_sizeWhite:   { value: activeItems[3].size },
-    u_opacityD:    { value: activeItems[3].opacity },
-    u_gradD:       { value: activeItems[3].grad },
+    u_sizeWhite:   { value: ITEMS[3].size },
+    u_opacityD:    { value: ITEMS[3].opacity },
+    u_gradD:       { value: ITEMS[3].grad },
     u_centerWhite: { value: new THREE.Vector2(0.5, 0.5) },
   };
 
@@ -318,28 +314,24 @@
     const ar = w / h;
     uniforms.u_aspectRatio.value = ar;
 
-    // Scale sizes by aspect ratio (giftee: size * ar → e.g. 0.80 * 2.016 = 1.613)
-    uniforms.u_sizeA.value     = activeItems[0].size * ar;
-    uniforms.u_sizeB.value     = activeItems[1].size * ar;
-    uniforms.u_sizeC.value     = activeItems[2].size * ar;
-    uniforms.u_sizeWhite.value = activeItems[3].size * ar;
+    // Scale sizes by aspect ratio
+    uniforms.u_sizeA.value     = ITEMS[0].size * ar;
+    uniforms.u_sizeB.value     = ITEMS[1].size * ar;
+    uniforms.u_sizeC.value     = ITEMS[2].size * ar;
+    uniforms.u_sizeWhite.value = ITEMS[3].size * ar;
 
-    // Update opacities for subpage
-    uniforms.u_opacityA.value = activeItems[0].opacity;
-    uniforms.u_opacityC.value = activeItems[2].opacity;
-
-    // Centers: x = (item.x + size*0.5), y recalculated to match giftee's GL coordinate system
+    // Centers with camera offset applied
     uniforms.u_circleCenter.value.set(
-      activeItems[0].x + activeItems[0].size * 0.5,
-      1.0 - (activeItems[0].y + activeItems[0].size * 0.5) * ar
+      ITEMS[0].x + ITEMS[0].size * 0.5 - cameraOffset.x,
+      1.0 - (ITEMS[0].y + ITEMS[0].size * 0.5) * ar + cameraOffset.y
     );
     uniforms.u_circleCenter2.value.set(
-      activeItems[1].x + activeItems[1].size * 0.5,
-      1.0 - (activeItems[1].y + activeItems[1].size * 0.5) * ar
+      ITEMS[1].x + ITEMS[1].size * 0.5 - cameraOffset.x,
+      1.0 - (ITEMS[1].y + ITEMS[1].size * 0.5) * ar + cameraOffset.y
     );
     uniforms.u_circleCenter3.value.set(
-      activeItems[2].x + activeItems[2].size * 0.5,
-      1.0 - (activeItems[2].y + activeItems[2].size * 0.5) * ar
+      ITEMS[2].x + ITEMS[2].size * 0.5 - cameraOffset.x,
+      1.0 - (ITEMS[2].y + ITEMS[2].size * 0.5) * ar + cameraOffset.y
     );
   }
   onResize();
@@ -377,8 +369,8 @@
 
     uniforms.u_time.value = now * 0.001;
 
-    // Smooth page-transition animation
-    lerpItems(dt);
+    // Smooth page-transition camera animation
+    lerpCamera(dt);
 
     renderer.render(scene, camera);
     requestAnimationFrame(animate);
@@ -387,45 +379,36 @@
 
   console.log('[bg3d] Three.js background initialized', isSubpage ? '(subpage mode)' : '(top mode)');
 
+  // Set initial camera offset for subpages
+  if (isSubpage) {
+    cameraOffset.x = CAM_OFFSET_SUB.x;
+    cameraOffset.y = CAM_OFFSET_SUB.y;
+    cameraOffsetTarget.x = CAM_OFFSET_SUB.x;
+    cameraOffsetTarget.y = CAM_OFFSET_SUB.y;
+  }
+
   // ── Expose API for Swup page transitions ──
   window._bg3dSetSubpage = function(isSub) {
-    const items = isSub ? ITEMS_SUB : ITEMS;
-    // Animate transition with lerp in the render loop
-    window._bg3dTargetItems = items;
+    cameraOffsetTarget.x = isSub ? CAM_OFFSET_SUB.x : 0;
+    cameraOffsetTarget.y = isSub ? CAM_OFFSET_SUB.y : 0;
   };
 
-  // Smooth transition between TOP and SUB positions
-  let currentItems = activeItems.map(it => ({ ...it }));
-  window._bg3dTargetItems = null;
+  // Smooth camera offset lerp
+  function lerpCamera(dt) {
+    const speed = 2.0;
+    const lf = 1 - Math.exp(-speed * dt);
+    cameraOffset.x += (cameraOffsetTarget.x - cameraOffset.x) * lf;
+    cameraOffset.y += (cameraOffsetTarget.y - cameraOffset.y) * lf;
 
-  function lerpItems(dt) {
-    const target = window._bg3dTargetItems;
-    if (!target) return;
-    const speed = 2.5; // transition speed
-    let done = true;
-    for (let i = 0; i < 4; i++) {
-      const t = target[i], c = currentItems[i];
-      const lf = 1 - Math.exp(-speed * dt);
-      c.x += (t.x - c.x) * lf;
-      c.y += (t.y - c.y) * lf;
-      c.size += (t.size - c.size) * lf;
-      c.opacity += (t.opacity - c.opacity) * lf;
-      if (Math.abs(t.x - c.x) > 0.001 || Math.abs(t.y - c.y) > 0.001 || Math.abs(t.size - c.size) > 0.001) done = false;
-    }
-    // Update uniforms
+    // Apply offset to all circle centers
     const ar = uniforms.u_aspectRatio.value;
-    uniforms.u_sizeA.value = currentItems[0].size * ar;
-    uniforms.u_sizeC.value = currentItems[2].size * ar;
-    uniforms.u_opacityA.value = currentItems[0].opacity;
-    uniforms.u_opacityC.value = currentItems[2].opacity;
     uniforms.u_circleCenter.value.set(
-      currentItems[0].x + currentItems[0].size * 0.5,
-      1.0 - (currentItems[0].y + currentItems[0].size * 0.5) * ar
+      ITEMS[0].x + ITEMS[0].size * 0.5 - cameraOffset.x,
+      1.0 - (ITEMS[0].y + ITEMS[0].size * 0.5) * ar + cameraOffset.y
     );
     uniforms.u_circleCenter3.value.set(
-      currentItems[2].x + currentItems[2].size * 0.5,
-      1.0 - (currentItems[2].y + currentItems[2].size * 0.5) * ar
+      ITEMS[2].x + ITEMS[2].size * 0.5 - cameraOffset.x,
+      1.0 - (ITEMS[2].y + ITEMS[2].size * 0.5) * ar + cameraOffset.y
     );
-    if (done) window._bg3dTargetItems = null;
   }
 })();
