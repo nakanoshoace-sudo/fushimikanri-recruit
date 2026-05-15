@@ -162,6 +162,32 @@ document.addEventListener('DOMContentLoaded', () => {
   /* ── Hero canvas ── */
   const canvas = document.getElementById('heroCanvas');
   if (canvas) heroCanvas(canvas);
+
+  /* ── About page: card scroll reveal + image load ── */
+  const aboutCards = document.querySelectorAll('.anim--card');
+  if (aboutCards.length) {
+    // IntersectionObserver for card reveal
+    const cardIO = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in-view');
+          cardIO.unobserve(entry.target);
+        }
+      });
+    }, { rootMargin: '0px 0px -60px 0px', threshold: 0.1 });
+    aboutCards.forEach(el => cardIO.observe(el));
+  }
+
+  // Image load → add .loaded class for fade-in
+  document.querySelectorAll('.about-card__circle img').forEach(img => {
+    const markLoaded = () => img.classList.add('loaded');
+    if (img.complete && img.naturalWidth > 0) {
+      markLoaded();
+    } else {
+      img.addEventListener('load', markLoaded, { once: true });
+      img.addEventListener('error', markLoaded, { once: true });
+    }
+  });
 });
 
 /* ── Hero animated background ── */

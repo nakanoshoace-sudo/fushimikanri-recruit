@@ -2176,6 +2176,86 @@ html.js .anim-up.visible{opacity:1;transform:translateY(0)}
   transform:translateX(6px);
 }
 
+/* ==========================================================
+   About Page — giftee-exact Animations
+   ========================================================== */
+
+/* Keyframes */
+@keyframes slideUp{
+  0%{transform:translateY(15%);filter:blur(10px);opacity:0}
+  100%{transform:translateY(0);filter:blur(0);opacity:1}
+}
+@keyframes lineStretch{
+  0%{width:0}
+  100%{width:100%}
+}
+@keyframes fadeInOpacity{
+  0%{opacity:0}
+  100%{opacity:1}
+}
+@keyframes cardReveal{
+  0%{opacity:0;transform:translateY(40px)}
+  100%{opacity:1;transform:translateY(0)}
+}
+
+/* Hero title — slideUp */
+.anim--slideUp{
+  filter:blur(10px);
+  opacity:0;
+  transform:translateY(15%);
+  animation:slideUp .6s ease forwards .05s;
+}
+
+/* Horizontal line under title — lineStretch */
+.about-hero__line{
+  display:block;
+  width:0;
+  height:1px;
+  background:rgba(42,92,82,.2);
+  margin-top:clamp(12px,1.4vw,26.7px);
+  animation:lineStretch 1.05s cubic-bezier(.19,1,.22,1) forwards .15s;
+}
+
+/* Breadcrumb — fadeIn with delay */
+.anim--fadeIn{
+  opacity:0;
+  animation:fadeInOpacity .6s ease forwards .9s;
+}
+
+/* Card sections — scroll-triggered via JS (.in-view) */
+.anim--card{
+  opacity:0;
+  transform:translateY(40px);
+  transition:opacity .7s cubic-bezier(.19,1,.22,1), transform .7s cubic-bezier(.19,1,.22,1);
+  transition-delay:var(--card-delay, 0s);
+}
+.anim--card.in-view{
+  opacity:1;
+  transform:translateY(0);
+}
+
+/* Card image — fade in on load */
+.about-card__circle img{
+  opacity:0;
+  transition:opacity .4s cubic-bezier(.39,.575,.565,1);
+}
+.about-card__circle img.loaded{
+  opacity:1;
+}
+
+/* Card image hover — slight scale */
+[data-hover-img] .about-card__circle img{
+  transition:opacity .4s cubic-bezier(.39,.575,.565,1), transform .4s cubic-bezier(.23,1,.32,1);
+}
+[data-hover-img]:hover .about-card__circle img.loaded{
+  transform:scale(1.05);
+}
+
+/* Arrow icon hover — slide right */
+[data-hover-img]:hover .about-card__icon svg{
+  transform:translateX(6px);
+}
+
 /* ── About Page Responsive ── */
 @media(max-width:1024px){
   .about-hero{
