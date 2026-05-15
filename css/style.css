@@ -3247,6 +3247,7 @@ html.is-animating body {
 }
 .jobs-pg-cards__inner{
   max-width:1532px; /* giftee: 1852-320=1532 */
+  padding-bottom:160px; /* space before FAQ section */
 }
 .jobs-pg-cards__filter{
   display:flex;
