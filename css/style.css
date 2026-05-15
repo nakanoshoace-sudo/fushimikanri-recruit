@@ -306,16 +306,16 @@ small{font-size:.55em;font-weight:400}
   gap:0;
 }
 
-/* Right col: "管理はもっと" — giftee right text col: left 64.1vw from page */
+/* Right col: "管理はもっと" — giftee right text col: 70.62vw from page left */
 .hero-tagline__col--right{
-  left:calc(64.1vw - 51vw);  /* 13.1vw offset within tagline container */
+  left:calc(70.62vw - 51vw);  /* 19.62vw offset within tagline container */
   top:4.4vh;                   /* giftee: 4.4vh */
 }
 
-/* Left col: "探求できる。" — positioned left of right col */
+/* Left col: "探求できる。" — giftee left text col: 64.42vw, top 37.4vh */
 .hero-tagline__col--left{
-  left:calc(64.1vw - 51vw - 8.1vw);  /* ~5vw from left edge of tagline */
-  top:37vh;
+  left:calc(64.42vw - 51vw);  /* 13.42vw offset within tagline container */
+  top:37.4vh;
 }
 
 /* Char sizing: giftee = 104px @ 1920 = 5.42vw */

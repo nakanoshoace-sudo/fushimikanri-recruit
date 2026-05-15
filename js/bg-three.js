@@ -16,10 +16,10 @@
   const FORE_COLOR = [91/255, 168/255, 153/255];   // #5BA899
 
   const ITEMS = [
-    { x: 0.02, y: 0.08, size: 0.80, opacity: 1,   lensWeight: 1,    grad: 0 },  // A — main left circle
-    { x: 0.00, y: 0.00, size: 0.00, opacity: 0,   lensWeight: 0,    grad: 0 },  // B — disabled
-    { x: 0.00, y: 0.00, size: 0.00, opacity: 0,   lensWeight: 0,    grad: 0 },  // C — disabled
-    { x: 0.00, y: 0.00, size: 0.00, opacity: 0,   lensWeight: 0,    grad: 0 },  // White — disabled
+    { x: 0.02, y: 0.083, size: 0.80, opacity: 1,   lensWeight: 1,    grad: 0 },  // A — main circle (giftee exact)
+    { x: 0.00, y: 0.00,  size: 0.00, opacity: 0,   lensWeight: 0,    grad: 0 },  // B — disabled (giftee exact)
+    { x: 0.22, y: 1.45,  size: 0.94, opacity: 1,   lensWeight: 0.25, grad: 1 },  // C — lower circle (giftee exact)
+    { x: 0.00, y: 0.00,  size: 0.00, opacity: 0,   lensWeight: 0,    grad: 0 },  // White — disabled
   ];
 
   // ── Shaders ──
