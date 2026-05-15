@@ -2703,3 +2703,413 @@ html.is-animating body {
   background-size: cover;
   background-position: center;
 }
+
+
+/* ══════════════════════════════════════════════════════════
+   NEWGRADS PAGE (.ngp-) — giftee /newgrads pixel-perfect
+   Measurements: 1920×945 viewport
+   ══════════════════════════════════════════════════════════ */
+
+/* ── Page layout ── */
+.ngp-page{
+  display:grid;
+  grid-template-columns:clamp(120px,16.7vw,320px) 1fr;
+  min-height:100vh;
+  position:relative;
+  z-index:1;
+}
+
+/* ── Local nav (sticky sidebar) — giftee: x:53, y:427, w:169 ── */
+.ngp-localnav{
+  position:sticky;
+  top:clamp(100px,16vh,160px);
+  align-self:start;
+  display:flex;
+  flex-direction:column;
+  gap:clamp(12px,1.4vw,20px);
+  padding-left:clamp(20px,2.8vw,53px);
+  z-index:2;
+}
+.ngp-localnav__item{
+  font-size:clamp(13px,.9vw,17.3px);
+  font-weight:400;
+  color:var(--c-dark);
+  text-decoration:none;
+  letter-spacing:.11em;
+  line-height:1.6;
+  transition:color .3s ease;
+}
+.ngp-localnav__item:hover{color:var(--c-primary)}
+.ngp-localnav__item.is-active{color:var(--c-primary);font-weight:600}
+
+/* ── Content area ── */
+.ngp-content{
+  max-width:clamp(800px,79.8vw,1532px);
+  padding-bottom:clamp(80px,8.3vw,160px);
+}
+
+/* ── Hero (subpage) ── */
+.ngp-hero{
+  position:relative;
+  min-height:clamp(500px,47vw,890px);
+  padding:clamp(120px,12.5vw,240px) 0 0;
+  overflow:hidden;
+}
+.ngp-hero__body{
+  display:grid;
+  grid-template-columns:auto 1fr;
+  gap:0 40px;
+  align-items:end;
+}
+.ngp-hero__main{
+  display:flex;
+  flex-direction:column;
+  gap:clamp(8px,1vw,16px);
+}
+.ngp-hero__title{
+  font-family:var(--ff-head);
+  font-size:clamp(32px,2.78vw,53.3px);
+  font-weight:600;
+  letter-spacing:.04em;
+  line-height:1.5;
+  color:var(--c-dark);
+}
+.ngp-hero__breadcrumb{
+  display:flex;gap:clamp(8px,.8vw,12px);
+  font-size:clamp(12px,.83vw,16px);
+  color:var(--c-gray);
+  letter-spacing:.11em;
+}
+.ngp-hero__breadcrumb a{
+  color:var(--c-primary);
+  text-decoration:none;
+  transition:opacity .3s;
+}
+.ngp-hero__breadcrumb a:hover{opacity:.7}
+.ngp-hero__breadcrumb span{color:var(--c-gray)}
+
+.ngp-hero__photo{
+  position:absolute;
+  right:0;top:clamp(220px,22.2vw,427px);
+  width:clamp(300px,31.6vw,607px);
+  height:clamp(150px,15.8vw,304px);
+  border-radius:clamp(6px,.5vw,10px) 0 0 clamp(6px,.5vw,10px);
+  overflow:hidden;
+}
+.ngp-hero__photo img{width:100%;height:100%;object-fit:cover;display:block}
+.ngp-hero__photo--empty{
+  background:var(--c-bg);
+}
+
+.ngp-hero__desc{
+  margin-top:clamp(16px,1.4vw,24px);
+  font-size:clamp(14px,1.11vw,21.3px);
+  line-height:1.9;
+  color:var(--c-gray);
+  max-width:clamp(400px,38.5vw,739px);
+}
+
+/* ── Section shared ── */
+.ngp-section{
+  padding-top:clamp(80px,8.3vw,160px);
+}
+.ngp-section__title{
+  font-family:var(--ff-head);
+  font-size:clamp(28px,2.5vw,48px);
+  font-weight:600;
+  letter-spacing:.04em;
+  line-height:1.55;
+  color:var(--c-dark);
+  margin-bottom:clamp(40px,4.2vw,80px);
+  position:relative;
+}
+/* Title line decoration (giftee linePosition-after) */
+.ngp-section__title::after{
+  content:"";
+  display:block;
+  width:100%;
+  height:1px;
+  background:var(--c-border);
+  margin-top:clamp(8px,.7vw,12px);
+}
+
+/* ── 会社の想い (Message) — giftee: split layout photo 475×475 + text 747px ── */
+.ngp-message{
+  display:grid;
+  grid-template-columns:clamp(240px,24.7vw,475px) 1fr;
+  gap:clamp(24px,2.8vw,53px);
+  margin-top:clamp(40px,4.2vw,80px);
+}
+.ngp-message__photo{
+  width:clamp(240px,24.7vw,475px);
+  height:clamp(240px,24.7vw,475px);
+  border-radius:clamp(6px,.5vw,10px);
+  overflow:hidden;
+  position:sticky;
+  top:clamp(80px,8.3vw,160px);
+  align-self:start;
+}
+.ngp-message__photo img{width:100%;height:100%;object-fit:cover;display:block}
+.ngp-message__photo--empty{background:var(--c-bg)}
+
+.ngp-message__body{
+  max-width:clamp(400px,38.9vw,747px);
+  margin-left:clamp(20px,2.8vw,53px);
+}
+.ngp-message__lead{
+  font-family:var(--ff-head);
+  font-size:clamp(24px,2.22vw,42.67px);
+  font-weight:600;
+  line-height:1.55;
+  letter-spacing:.04em;
+  color:var(--c-dark);
+  margin-bottom:clamp(24px,2.5vw,48px);
+}
+.ngp-message__text p{
+  font-size:clamp(14px,1.11vw,21.3px);
+  line-height:1.9;
+  color:var(--c-gray);
+  margin-bottom:clamp(16px,1.4vw,26px);
+}
+.ngp-message__author{
+  font-size:clamp(13px,.97vw,18.67px);
+  line-height:1.7;
+  color:var(--c-dark);
+  margin-top:clamp(24px,2.5vw,48px);
+}
+
+/* ── インタビュー — giftee: 3col grid, card 475×528, photo 475×317 ── */
+.ngp-interview__lead{
+  font-size:clamp(14px,1.11vw,21.3px);
+  line-height:1.9;
+  color:var(--c-gray);
+  max-width:clamp(640px,66.7vw,1280px);
+  margin-bottom:clamp(32px,3.3vw,60px);
+}
+.ngp-interview__grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:clamp(24px,2.78vw,53px) clamp(24px,2.78vw,53px);
+}
+.ngp-interview__card{
+  display:flex;
+  flex-direction:column;
+  text-decoration:none;
+  color:inherit;
+  transition:opacity .3s ease;
+}
+.ngp-interview__card:hover{opacity:.85}
+.ngp-interview__card-photo{
+  width:100%;
+  aspect-ratio:475/317;
+  border-radius:clamp(6px,.5vw,10px);
+  overflow:hidden;
+  margin-bottom:clamp(12px,1.4vw,20px);
+}
+.ngp-interview__card-photo img{width:100%;height:100%;object-fit:cover;display:block}
+.ngp-interview__card-photo--empty{background:var(--c-bg)}
+
+.ngp-interview__card-body{
+  padding:0 clamp(12px,1.4vw,27px);
+}
+.ngp-interview__card-title{
+  font-size:clamp(14px,1.11vw,21.3px);
+  font-weight:500;
+  line-height:1.6;
+  color:var(--c-dark);
+  margin-bottom:clamp(6px,.5vw,8px);
+  display:block;
+}
+.ngp-interview__card-name{
+  font-size:clamp(13px,.97vw,18.67px);
+  font-weight:500;
+  color:var(--c-dark);
+  display:block;
+}
+.ngp-interview__card-position{
+  font-size:clamp(11px,.83vw,16px);
+  color:var(--c-gray);
+  display:block;
+  margin-top:2px;
+}
+
+/* ── 職種紹介 — giftee: 2col cards 739×293, outlined ── */
+.ngp-positions__lead{
+  font-size:clamp(14px,1.11vw,21.3px);
+  line-height:1.9;
+  color:var(--c-gray);
+  margin-bottom:clamp(24px,2.5vw,40px);
+}
+.ngp-positions__grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:clamp(24px,2.78vw,53px);
+}
+.ngp-positions__card{
+  display:flex;
+  flex-direction:column;
+  gap:clamp(8px,.7vw,12px);
+  padding:clamp(24px,2.8vw,54px);
+  border:1px solid rgba(52,17,3,.2);
+  border-radius:clamp(8px,.7vw,13px);
+  text-decoration:none;
+  min-height:clamp(160px,15.3vw,293px);
+  position:relative;
+  transition:border-color .3s ease;
+}
+.ngp-positions__card::after{
+  content:"";display:block;position:absolute;top:0;left:0;
+  width:calc(100% + 2px);height:calc(100% + 2px);
+  border-radius:clamp(8px,.7vw,13px);pointer-events:none;
+  border:1px solid var(--c-primary);margin:-1px;opacity:0;
+  transition:opacity .4s cubic-bezier(.19,1,.22,1);
+}
+.ngp-positions__card:hover::after{
+  opacity:1;transition:opacity .5s cubic-bezier(.39,.575,.565,1);
+}
+.ngp-positions__card-shoulder{
+  font-size:clamp(11px,.83vw,16px);
+  font-weight:500;
+  color:var(--c-gray);
+}
+.ngp-positions__card-title{
+  font-family:var(--ff-head);
+  font-size:clamp(16px,1.39vw,26.67px);
+  font-weight:600;
+  color:var(--c-dark);
+  line-height:1.4;
+}
+.ngp-positions__card-desc{
+  font-size:clamp(13px,.97vw,18.67px);
+  line-height:1.8;
+  color:var(--c-gray);
+}
+.ngp-positions__card-arrow{
+  margin-top:auto;
+  font-size:clamp(16px,1.2vw,21px);
+  color:var(--c-primary);
+  transition:transform .35s var(--ease);
+}
+.ngp-positions__card:hover .ngp-positions__card-arrow{transform:translateX(4px)}
+
+/* ── 募集要項 — giftee: split 475×475 photo + table ── */
+.ngp-requirements{
+  display:grid;
+  grid-template-columns:clamp(240px,24.7vw,475px) 1fr;
+  gap:clamp(24px,2.8vw,53px);
+  margin-top:clamp(40px,4.2vw,80px);
+}
+.ngp-requirements__photo{
+  width:clamp(240px,24.7vw,475px);
+  height:clamp(240px,24.7vw,475px);
+  border-radius:clamp(6px,.5vw,10px);
+  overflow:hidden;
+  position:sticky;
+  top:clamp(80px,8.3vw,160px);
+  align-self:start;
+}
+.ngp-requirements__photo img{width:100%;height:100%;object-fit:cover;display:block}
+.ngp-requirements__photo--empty{background:var(--c-bg)}
+
+.ngp-requirements__table{
+  width:100%;
+  border-collapse:collapse;
+}
+.ngp-requirements__table th,
+.ngp-requirements__table td{
+  padding:clamp(12px,1.4vw,24px) 0;
+  border-bottom:1px solid var(--c-border);
+  text-align:left;
+  vertical-align:top;
+  font-size:clamp(13px,.97vw,18.67px);
+  line-height:1.8;
+}
+.ngp-requirements__table th{
+  font-weight:600;
+  color:var(--c-dark);
+  width:clamp(100px,10vw,180px);
+  white-space:nowrap;
+}
+.ngp-requirements__table td{
+  color:var(--c-gray);
+}
+
+/* ── FAQ — giftee: split-14, H3 left + details right ── */
+.ngp-faq{
+  margin-top:clamp(40px,4.2vw,80px);
+}
+.ngp-faq__category{
+  display:grid;
+  grid-template-columns:clamp(140px,14vw,242px) 1fr;
+  gap:clamp(24px,2.8vw,53px);
+  margin-bottom:clamp(40px,4.2vw,80px);
+}
+.ngp-faq__category-title{
+  font-family:var(--ff-head);
+  font-size:clamp(20px,1.67vw,32px);
+  font-weight:600;
+  color:var(--c-dark);
+  line-height:1.5;
+  position:sticky;
+  top:clamp(80px,8.3vw,160px);
+  align-self:start;
+}
+.ngp-faq__items{
+  display:flex;
+  flex-direction:column;
+}
+.ngp-faq__item{
+  border-top:1px solid var(--c-border);
+}
+.ngp-faq__item:last-child{
+  border-bottom:1px solid var(--c-border);
+}
+.ngp-faq__item summary{
+  font-size:clamp(14px,1.11vw,21.3px);
+  font-weight:500;
+  color:var(--c-dark);
+  padding:clamp(16px,1.4vw,24px) clamp(32px,3vw,53px) clamp(16px,1.4vw,24px) 0;
+  cursor:pointer;
+  list-style:none;
+  position:relative;
+  line-height:1.8;
+}
+.ngp-faq__item summary::-webkit-details-marker{display:none}
+.ngp-faq__item summary::after{
+  content:"+";
+  position:absolute;
+  right:0;top:50%;
+  transform:translateY(-50%);
+  font-size:clamp(18px,1.4vw,24px);
+  font-weight:300;
+  color:var(--c-gray);
+  transition:transform .3s ease;
+}
+.ngp-faq__item[open] summary::after{
+  content:"−";
+}
+.ngp-faq__item .ngp-faq__answer{
+  font-size:clamp(13px,.97vw,18.67px);
+  line-height:1.8;
+  color:var(--c-gray);
+  padding:0 clamp(24px,2.8vw,53px) clamp(16px,1.4vw,24px) 0;
+}
+
+/* ── Mobile responsive ── */
+@media(max-width:1023px){
+  .ngp-page{grid-template-columns:1fr}
+  .ngp-localnav{display:none}
+  .ngp-hero__photo{position:relative;right:auto;top:auto;width:100%;height:auto;margin-top:24px;border-radius:clamp(6px,.5vw,10px)}
+  .ngp-message{grid-template-columns:1fr}
+  .ngp-message__photo{width:100%;height:auto;aspect-ratio:1;position:relative;top:auto}
+  .ngp-message__body{margin-left:0;max-width:100%}
+  .ngp-interview__grid{grid-template-columns:repeat(2,1fr)}
+  .ngp-positions__grid{grid-template-columns:1fr}
+  .ngp-requirements{grid-template-columns:1fr}
+  .ngp-requirements__photo{width:100%;height:auto;aspect-ratio:1;position:relative;top:auto}
+  .ngp-faq__category{grid-template-columns:1fr}
+  .ngp-faq__category-title{position:relative;top:auto;margin-bottom:16px}
+}
+@media(max-width:767px){
+  .ngp-interview__grid{grid-template-columns:1fr}
+}
