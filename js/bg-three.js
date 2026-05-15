@@ -42,6 +42,7 @@
     'vision':    { x: 0.35, y: -0.05 },
     'newgrads':  { x: 0.25, y:  0.15 },
     'privacy':   { x: 0.20, y:  0.00 },
+    'positions': { x: 0.35, y:  0.10 },
   };
   const DEFAULT_SUB_OFFSET = { x: 0.25, y: 0.00 };
 

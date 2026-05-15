@@ -3441,3 +3441,205 @@ html.is-animating body {
   line-height:1.9;
   color:rgba(0,0,0,.7);
 }
+
+/* ================================================================
+   POSITIONS PAGE — .pos-* (giftee /positions/ pixel-perfect)
+   Measured at 1920x945 viewport
+   ================================================================ */
+
+/* ── Filter section ── */
+.pos-filter{
+  padding:0 53px 0 320px;
+}
+.pos-filter__inner{
+  display:grid;
+  grid-template-columns:auto 1fr;
+  gap:53px;
+  padding:80px 0 53px;
+  border-bottom:1px solid rgba(0,0,0,.1);
+}
+.pos-filter__sidebar{
+  writing-mode:vertical-rl;
+  text-orientation:mixed;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.pos-filter__sidebar-label{
+  font-size:16px;
+  font-weight:500;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.pos-filter__sidebar-count{
+  writing-mode:horizontal-tb;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:26px;
+  height:26px;
+  border-radius:50%;
+  background:var(--c-primary-dd);
+  color:#fff;
+  font-size:13px;
+  font-weight:600;
+}
+.pos-filter__body{
+  display:flex;
+  flex-direction:column;
+  gap:20px;
+}
+.pos-filter__row{
+  display:flex;
+  align-items:center;
+  gap:20px;
+}
+.pos-filter__row-label{
+  font-size:16px;
+  font-weight:600;
+  min-width:80px;
+  flex-shrink:0;
+}
+.pos-filter__pills{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+}
+.pos-filter__pill{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding:8px 20px;
+  font-size:14px;
+  font-family:inherit;
+  border:1px solid rgba(0,0,0,.15);
+  border-radius:27px;
+  background:#fff;
+  color:var(--c-dark);
+  cursor:pointer;
+  transition:all .25s var(--ease);
+}
+.pos-filter__pill:hover{
+  border-color:var(--c-primary);
+  color:var(--c-primary-dd);
+}
+.pos-filter__pill.is-active{
+  background:var(--c-primary-dd);
+  border-color:var(--c-primary-dd);
+  color:#fff;
+}
+.pos-filter__actions{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:16px;
+  margin-top:20px;
+}
+.pos-filter__clear{
+  font-size:16px;
+  font-family:inherit;
+  color:var(--c-dark);
+  text-decoration:underline;
+  text-underline-offset:4px;
+  cursor:pointer;
+  transition:color .25s;
+}
+.pos-filter__clear:hover{color:var(--c-primary)}
+.pos-filter__submit{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding:12px 32px;
+  font-size:16px;
+  font-weight:600;
+  font-family:inherit;
+  background:var(--c-primary-dd);
+  color:#fff;
+  border-radius:27px;
+  cursor:pointer;
+  transition:background .25s var(--ease);
+}
+.pos-filter__submit:hover{background:var(--c-primary-d)}
+
+/* ── Count ── */
+.pos-count{
+  padding:80px 53px 40px;
+}
+.pos-count__num{
+  font-size:48px;
+  font-weight:600;
+  font-family:var(--ff-head);
+  line-height:1.3;
+}
+.pos-count__unit{
+  font-size:21px;
+  font-weight:400;
+  margin-left:4px;
+}
+
+/* ── Position card grid (3col, giftee-exact) ── */
+.pos-list{
+  padding:0 53px 160px;
+}
+.pos-list__grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:53px;
+}
+
+/* ── Individual position card ── */
+.pos-card{
+  display:flex;
+  flex-direction:column;
+  gap:27px;
+  padding:53px;
+  background:#fff;
+  border-radius:13.3px;
+  text-decoration:none;
+  color:var(--c-dark);
+  position:relative;
+  transition:box-shadow .4s var(--ease);
+}
+.pos-card::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  border:1px solid rgba(0,0,0,.06);
+  border-radius:13.3px;
+  pointer-events:none;
+  transition:opacity .4s var(--ease);
+}
+.pos-card:hover{
+  box-shadow:0 8px 40px rgba(0,0,0,.06);
+}
+.pos-card:hover::after{opacity:0}
+
+/* Card title */
+.pos-card__title{
+  font-size:21px;
+  font-weight:500;
+  line-height:1.9;
+}
+
+/* Card meta (dl) */
+.pos-card__meta{
+  display:flex;
+  flex-direction:column;
+  gap:4px;
+}
+.pos-card__meta-row{
+  display:flex;
+  gap:16px;
+  font-size:14px;
+  line-height:1.9;
+}
+.pos-card__meta-row dt{
+  font-weight:500;
+  opacity:.5;
+  min-width:56px;
+  flex-shrink:0;
+}
+.pos-card__meta-row dd{
+  font-weight:400;
+}
