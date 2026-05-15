@@ -22,13 +22,34 @@
     { x: 0.00, y: 0.00,  size: 0.00, opacity: 0,   lensWeight: 0,    grad: 0 },  // White — disabled
   ];
 
-  // ── Subpage detection: camera shifts to top-right (circles appear to move to bottom-left) ──
+  // ── Subpage detection: camera shifts per page (circles stay fixed) ──
   const isSubpage = document.documentElement.classList.contains('page--sub');
-  // Camera offset: on subpages, shift viewpoint right+up → circles appear left+down
-  // In GL coords: offset.x positive = camera right (circles shift left), offset.y positive = camera up (circles shift down)
   const cameraOffset = { x: 0, y: 0 };
   const cameraOffsetTarget = { x: 0, y: 0 };
-  const CAM_OFFSET_SUB = { x: 0.25, y: 0.20 };  // how far camera moves on subpages
+
+  // Per-page camera offsets (camera moves → circles appear to move opposite)
+  // about:     camera right+down  → circles appear left+down
+  // culture:   camera more right+down → circles further left+down
+  // workstyle: camera right+up   → circles appear left+up
+  // jobs:      camera far right (zoomed out feel) → circles appear far left
+  const PAGE_OFFSETS = {
+    'about':     { x: 0.20, y: -0.15 },
+    'culture':   { x: 0.30, y: -0.25 },
+    'workstyle': { x: 0.25, y:  0.20 },
+    'jobs':      { x: 0.40, y:  0.05 },
+    'message':   { x: 0.15, y: -0.10 },
+    'services':  { x: 0.20, y:  0.10 },
+    'vision':    { x: 0.35, y: -0.05 },
+    'newgrads':  { x: 0.25, y:  0.15 },
+    'privacy':   { x: 0.20, y:  0.00 },
+  };
+  const DEFAULT_SUB_OFFSET = { x: 0.25, y: 0.00 };
+
+  function detectPageOffset() {
+    const path = window.location.pathname.replace(/.*\//, '').replace('.html', '').replace(/\/$/, '') || 'index';
+    if (path === 'index' || path === '') return { x: 0, y: 0 };
+    return PAGE_OFFSETS[path] || DEFAULT_SUB_OFFSET;
+  }
 
   // ── Shaders ──
   const vertexShader = `
@@ -379,18 +400,18 @@
 
   console.log('[bg3d] Three.js background initialized', isSubpage ? '(subpage mode)' : '(top mode)');
 
-  // Set initial camera offset for subpages
-  if (isSubpage) {
-    cameraOffset.x = CAM_OFFSET_SUB.x;
-    cameraOffset.y = CAM_OFFSET_SUB.y;
-    cameraOffsetTarget.x = CAM_OFFSET_SUB.x;
-    cameraOffsetTarget.y = CAM_OFFSET_SUB.y;
-  }
+  // Set initial camera offset based on current page
+  const initOffset = detectPageOffset();
+  cameraOffset.x = initOffset.x;
+  cameraOffset.y = initOffset.y;
+  cameraOffsetTarget.x = initOffset.x;
+  cameraOffsetTarget.y = initOffset.y;
 
   // ── Expose API for Swup page transitions ──
   window._bg3dSetSubpage = function(isSub) {
-    cameraOffsetTarget.x = isSub ? CAM_OFFSET_SUB.x : 0;
-    cameraOffsetTarget.y = isSub ? CAM_OFFSET_SUB.y : 0;
+    const off = detectPageOffset();
+    cameraOffsetTarget.x = off.x;
+    cameraOffsetTarget.y = off.y;
   };
 
   // Smooth camera offset lerp
