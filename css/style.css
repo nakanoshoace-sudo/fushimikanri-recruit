@@ -25,10 +25,10 @@
   --c-border-l:#eee;
   --c-bg:#FAFBFA;
   --c-white:#fff;
-  --ff-head:'Geist','Noto Sans JP','Hiragino Kaku Gothic ProN',sans-serif;
-  --ff:'Noto Sans JP','Hiragino Kaku Gothic ProN',sans-serif;
+  --ff-head:'YuGothic Pr6N','Yu Gothic Pr6N','YuGothic','Yu Gothic','Hiragino Kaku Gothic ProN','Noto Sans JP',sans-serif;
+  --ff:'YuGothic Pr6N','Yu Gothic Pr6N','YuGothic','Yu Gothic','Hiragino Kaku Gothic ProN','Noto Sans JP',sans-serif;
   --ff-en:'Geist','Inter',sans-serif;
-  --ff-hero:'Zen Kaku Gothic New','Noto Sans JP','Hiragino Kaku Gothic ProN',sans-serif;
+  --ff-hero:'YuGothic Pr6N','Yu Gothic Pr6N','YuGothic','Yu Gothic','Hiragino Kaku Gothic ProN','Noto Sans JP',sans-serif;
   --gap:clamp(16px,2.4vw,40px);
   --wrap:1345px;
   --sec-py:clamp(80px,8.3vw,120px);
@@ -351,7 +351,7 @@ small{font-size:.55em;font-weight:400}
 }
 .hero-tagline__col--accent .vchar.vchar--in:nth-child(1),
 .hero-tagline__col--accent .vchar.vchar--in:nth-child(2){
-  color:var(--c-primary);
+  color:var(--c-primary-dd);
 }
 
 /* giftee uses same size for ALL chars including っ and 。 */

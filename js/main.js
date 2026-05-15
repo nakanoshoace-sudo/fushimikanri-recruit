@@ -276,7 +276,7 @@ document.addEventListener('DOMContentLoaded', () => {
       durationMs: 1200,
       delayMs: 2800,
       startHex: '#1a1a1a',
-      endHex: '#5BA899',
+      endHex: '#2A5C52',
     });
   }
 });
