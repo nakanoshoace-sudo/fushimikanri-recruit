@@ -3388,6 +3388,7 @@ html.is-animating body {
   top:120px;
   height:fit-content;
   white-space:nowrap;
+  align-self:start;
 }
 
 /* Accordion items */
