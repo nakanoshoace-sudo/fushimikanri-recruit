@@ -65,16 +65,21 @@
     const heroEl = document.querySelector('.hero');
     
     if (scrollHeader) {
-      if (heroEl) {
-        // Index page — show on scroll
+      const heroEl2 = document.querySelector('.hero');
+      const subTopNav2 = document.querySelector('.sub-top-nav');
+
+      if (heroEl2 || subTopNav2) {
+        // Has a nav area (hero or sub-top-nav) — show scroll-header after passing it
         scrollHeader.classList.remove('visible');
+        const triggerEl = heroEl2 || subTopNav2;
+        const triggerRatio = heroEl2 ? 0.7 : 0.6;
         const checkScroll = () => {
-          scrollHeader.classList.toggle('visible', window.scrollY > heroEl.offsetHeight * 0.7);
+          scrollHeader.classList.toggle('visible', window.scrollY > triggerEl.offsetHeight * triggerRatio);
         };
         window.addEventListener('scroll', checkScroll, { passive: true });
         checkScroll();
       } else {
-        // Subpage — always visible
+        // No nav area at all — always visible
         scrollHeader.classList.add('visible');
       }
     }
