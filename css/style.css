@@ -1652,8 +1652,27 @@ img[loading="lazy"].img-loaded{
    SUBPAGES — shared styles for all inner pages
    ========================================================== */
 
-/* Force scroll header visible on subpages */
-.page--sub .scroll-header{transform:translateY(0)!important;opacity:1!important}
+/* Subpage global nav area — same as hero top nav */
+.sub-top-nav{
+  position:relative;
+  padding:clamp(32px,2.8vw,53px) 0 0;
+  min-height:clamp(320px,25vw,420px);
+  background:transparent;
+}
+.sub-top-nav .hero-left-col{
+  position:absolute;
+  left:2.8vw;
+  top:clamp(32px,2.8vw,53px);
+}
+.sub-top-nav .hero-right-cta{
+  position:absolute;
+  top:clamp(32px,2.8vw,53px);
+  right:clamp(16px,2vw,40px);
+}
+.sub-top-nav .hero-sidenav a.active{
+  color:var(--c-primary-dd);
+  font-weight:600;
+}
 
 /* Hero */
 .subpage-hero{padding:120px 0 60px;background:var(--c-bg)}
