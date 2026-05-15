@@ -140,18 +140,18 @@
 
     <!-- ===== ABOUT — giftee exact grid ===== -->
     <section class="sec sec--about" id="about">
-      <!-- Row 0: title + line -->
+      <!-- Row 0: title + line (giftee: x53, yRel160, 53.3px) -->
       <div class="about-top">
         <h2 class="about-title anim-up anim-up--title">伏見管理サービスについて</h2>
         <div class="about-top__line anim-up"></div>
       </div>
 
-      <!-- Grid (giftee: 2col, 3rows) -->
+      <!-- Grid (giftee exact: 2col, 3rows) -->
       <div class="about-grid">
-        <!-- col2 row1: lead text -->
+        <!-- col2 row1: lead text (giftee: x979, w873, 21.3px/40.5px) -->
         <p class="about-grid__lead anim-up">私たちは、マンション管理を軸に"安心の連鎖"を社会に広げていくことを目指しています。伏見管理サービスの事業の原点と現在地、そしてこれからの展望をお伝えします。</p>
 
-        <!-- col1 row1-2: 採用メッセージ (photo + label) -->
+        <!-- col1 row1-2: 採用メッセージ (giftee: w607, h213, circle photo) -->
         <a href="message.html" class="about-grid__message anim-up">
           <div class="about-grid__message-photo">
             <img src="img/entrance.png" alt="伏見管理サービス エントランス" loading="lazy">
@@ -162,7 +162,7 @@
           </span>
         </a>
 
-        <!-- col2 row2: pill btn -->
+        <!-- col2 row2: pill btn (giftee: w347, h107) -->
         <div class="about-grid__btn anim-up">
           <a href="about.html" class="about-pill-btn">
             <span>伏見管理サービスについて</span>
@@ -170,21 +170,25 @@
           </a>
         </div>
 
-        <!-- col1-2 row3: 2 horizontal cards -->
+        <!-- col1-2 row3: 2 blur cards (giftee: 873×267, blur(20px), circle 213px) -->
         <div class="about-grid__cards">
           <a href="services.html" class="about-card anim-up">
-            <div class="about-circle-photo about-circle-photo--md">
+            <div class="about-card__photo">
               <img src="img/exterior.png" alt="オフィス外観" loading="lazy">
             </div>
-            <span class="about-card__label">私たちの事業</span>
-            <span class="about-card__arrow">→</span>
+            <span class="about-card__text">
+              <span class="about-card__label">私たちの事業</span>
+              <span class="about-card__arrow">→</span>
+            </span>
           </a>
           <a href="vision.html" class="about-card anim-up">
-            <div class="about-circle-photo about-circle-photo--md">
+            <div class="about-card__photo">
               <img src="img/terrace.png" alt="中庭テラス" loading="lazy">
             </div>
-            <span class="about-card__label">私たちの目指すこと</span>
-            <span class="about-card__arrow">→</span>
+            <span class="about-card__text">
+              <span class="about-card__label">私たちの目指すこと</span>
+              <span class="about-card__arrow">→</span>
+            </span>
           </a>
         </div>
       </div>

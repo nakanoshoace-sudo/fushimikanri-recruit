@@ -406,26 +406,25 @@ small{font-size:.55em;font-weight:400}
 
 /* ── About — giftee style (full-bleed, no max-width) ── */
 .sec--about{
-  background:transparent;  /* fixed canvas shows through */
-  padding:var(--sec-py) 0;  /* giftee: 160px top & bottom */
+  background:transparent;
+  padding:var(--sec-py) 0;
   overflow:visible;
   position:relative;
   z-index:1;
 }
 
-/* Top row: title + line (no desc — desc moved to grid) */
+/* Top row: title + line (giftee: x53, 53.3px, weight600, ls2.13) */
 .about-top{
   display:grid;
   grid-template-columns:auto 1fr;
   gap:0 40px;
   align-items:center;
-  padding:0 clamp(20px,2.8vw,40px);
-  margin-bottom:0; /* grid handles spacing via margin-top */
+  padding:0 clamp(20px,2.8vw,53px); /* giftee: 53px left padding */
 }
 .about-title{
   grid-row:1;grid-column:1;
   font-family:var(--ff-head);
-  font-size:clamp(28px,2.78vw,53px);  /* giftee: 53.33px */
+  font-size:clamp(32px,2.78vw,53px);  /* giftee: 53.33px — user: bigger */
   font-weight:600;
   letter-spacing:.04em;
   line-height:1.15;
@@ -439,50 +438,50 @@ small{font-size:.55em;font-weight:400}
   background:var(--c-border);
 }
 
-/* ── About grid (giftee exact: 2col, 3rows) ── */
+/* ── About grid (giftee exact: 2col×3rows, gap40, margin-top80) ── */
 .about-grid{
   display:grid;
   grid-template-columns:1fr 1fr;
   grid-template-rows:auto auto auto;
-  gap:40px;
-  padding:0 clamp(20px,2.8vw,40px);
-  margin-top:80px;
+  gap:clamp(20px,2.1vw,40px);
+  padding:0 clamp(20px,2.8vw,53px);
+  margin-top:clamp(40px,4.2vw,80px);
 }
 
-/* col2 row1: lead */
+/* col2 row1: lead (giftee: 21.3px, lh40.5px = 1.9) */
 .about-grid__lead{
   grid-column:2/3;
   grid-row:1/2;
-  font-size:16px;
+  font-size:clamp(14px,1.11vw,21px); /* giftee: 21.33px */
   line-height:1.9;
   color:var(--c-gray);
 }
 
-/* col1 row1-2: 採用メッセージ link */
+/* col1 row1-2: 採用メッセージ (giftee: w607, h213, photo347×213+text) */
 .about-grid__message{
   grid-column:1/2;
   grid-row:1/3;
   display:grid;
   grid-template-columns:auto 1fr;
-  gap:40px;
+  gap:clamp(20px,2.1vw,40px);
   align-items:center;
-  padding:20px 40px 20px 20px;
+  padding:clamp(12px,1vw,20px) clamp(20px,2.1vw,40px) clamp(12px,1vw,20px) clamp(12px,1vw,20px);
   border-radius:10px;
   text-decoration:none;
   transition:background .3s var(--ease);
 }
-.about-grid__message:hover{background:var(--c-bg)}
+.about-grid__message:hover{background:rgba(255,255,255,.2)}
 .about-grid__message-photo{
-  width:clamp(140px,18vw,260px);
-  height:clamp(100px,11vw,160px);
-  border-radius:10px;
+  width:clamp(160px,18vw,347px); /* giftee: 347px */
+  height:clamp(110px,11vw,213px); /* giftee: 213px */
+  border-radius:9999px;
   overflow:hidden;
 }
 .about-grid__message-photo img{width:100%;height:100%;object-fit:cover;display:block}
 .about-grid__message-label{
   display:flex;align-items:center;gap:12px;
   font-family:var(--ff-head);
-  font-size:16px;
+  font-size:clamp(18px,1.39vw,27px); /* giftee: 26.67px — user: bigger */
   font-weight:600;
   color:var(--c-dark);
 }
@@ -493,45 +492,83 @@ small{font-size:.55em;font-weight:400}
 }
 .about-grid__message:hover .about-grid__arrow{transform:translateX(4px)}
 
-/* col2 row2: pill button */
+/* col2 row2: pill button (giftee: w347, h107, border 1px) */
 .about-grid__btn{
   grid-column:2/3;
   grid-row:2/3;
   display:flex;align-items:flex-start;
 }
 
-/* col1-2 row3: 2 cards side by side */
+/* col1-2 row3: 2 blur cards (giftee: 873×267, rgba(255,255,255,0.4) blur(20px), br13.3) */
 .about-grid__cards{
   grid-column:1/3;
   grid-row:3/4;
   display:grid;
   grid-template-columns:1fr 1fr;
-  gap:40px;
+  gap:clamp(20px,2.1vw,40px);
 }
 
-/* Circle photos */
-.about-circle-photo{border-radius:50%;overflow:hidden;flex-shrink:0}
-.about-circle-photo--lg{width:clamp(160px,18vw,280px);height:clamp(160px,18vw,280px)}
-.about-circle-photo--md{width:clamp(100px,11vw,160px);height:clamp(100px,11vw,160px)}
-.about-circle-photo svg,.about-circle-photo img{width:100%;height:100%;display:block;object-fit:cover}
+/* Blur card — giftee style */
+.about-card{
+  display:flex;align-items:center;
+  gap:clamp(20px,2.5vw,40px);
+  padding:clamp(16px,1.4vw,27px); /* giftee: ~27px */
+  background:rgba(255,255,255,.4);
+  -webkit-backdrop-filter:blur(20px);
+  backdrop-filter:blur(20px);
+  border-radius:clamp(8px,0.7vw,13px); /* giftee: 13.33px */
+  text-decoration:none;
+  min-height:clamp(160px,13.9vw,267px); /* giftee: 267px */
+  transition:all .35s var(--ease);
+}
+.about-card:hover{
+  transform:translateY(-4px);
+  box-shadow:0 8px 32px rgba(91,168,153,.1);
+}
 
-/* (rect photo moved to about-grid__message-photo) */
+/* Circle photo — bigger per user request (giftee 213px → 280px) */
+.about-card__photo{
+  width:clamp(140px,14.6vw,280px); /* user: bigger than giftee's 213px */
+  height:clamp(140px,14.6vw,280px);
+  border-radius:9999px;
+  overflow:hidden;
+  flex-shrink:0;
+}
+.about-card__photo img{width:100%;height:100%;object-fit:cover;display:block}
 
-/* (message link and rect photo moved to about-grid) */
+/* Card text — horizontal (user request: no vertical writing) */
+.about-card__text{
+  display:flex;align-items:center;gap:16px;
+  flex:1;
+}
+.about-card__label{
+  font-family:var(--ff-head);
+  font-size:clamp(20px,1.67vw,32px); /* giftee: 26.67px — user: bigger */
+  font-weight:600;
+  color:var(--c-dark);
+  line-height:1.4;
+}
+.about-card__arrow{
+  font-family:var(--ff-en);font-size:clamp(20px,1.4vw,28px);
+  font-weight:300;color:var(--c-accent);
+  transition:transform .35s var(--ease);
+  flex-shrink:0;
+}
+.about-card:hover .about-card__arrow{transform:translateX(4px)}
 
-/* Pill button (rounded rect) */
+/* Pill button (giftee: border 1px solid, br12px, 21.3px text) */
 .about-pill-btn{
   display:flex;align-items:center;justify-content:space-between;
   gap:24px;
-  padding:clamp(14px,1.4vw,20px) clamp(20px,2vw,32px);
+  padding:clamp(16px,1.4vw,24px) clamp(24px,2vw,36px);
   border:1px solid var(--c-border);
   border-radius:12px;
   font-family:var(--ff-head);
-  font-size:16px;
-  font-weight:600;
+  font-size:clamp(14px,1.11vw,21px); /* giftee: 21.33px */
+  font-weight:500;
   color:var(--c-dark);
   text-decoration:none;
-  min-width:clamp(180px,18vw,320px);
+  min-width:clamp(200px,18vw,347px); /* giftee: 347px */
   transition:all .35s var(--ease);
 }
 .about-pill-btn:hover{
@@ -544,37 +581,6 @@ small{font-size:.55em;font-weight:400}
   transition:transform .35s var(--ease);
 }
 .about-pill-btn:hover .about-pill-btn__arrow{transform:translateX(4px)}
-
-/* (bottom cards now in about-grid__cards) */
-.about-card{
-  display:flex;align-items:center;
-  gap:clamp(16px,2vw,32px);
-  padding:20px 40px 20px 20px;
-  background:var(--c-white);
-  border:1px solid var(--c-border-l);
-  border-radius:10px;
-  text-decoration:none;
-  min-height:200px;
-  transition:all .35s var(--ease);
-}
-.about-card:hover{
-  transform:translateY(-4px);
-  box-shadow:0 8px 32px rgba(91,168,153,.1);
-}
-.about-card__label{
-  flex:1;
-  font-family:var(--ff-head);
-  font-size:clamp(15px,1.2vw,21px);
-  font-weight:700;
-  color:var(--c-dark);
-}
-.about-card__arrow{
-  font-family:var(--ff-en);font-size:clamp(18px,1.4vw,24px);
-  font-weight:300;color:var(--c-accent);
-  transition:transform .35s var(--ease);
-  flex-shrink:0;
-}
-.about-card:hover .about-card__arrow{transform:translateX(4px)}
 
 @media(max-width:767px){
   .about-top{grid-template-columns:1fr;gap:12px}
