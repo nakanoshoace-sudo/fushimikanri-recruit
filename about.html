@@ -14,14 +14,20 @@
 
   <div id="swup" class="transition-main">
   <!-- Scroll header -->
-  <header class="scroll-header" id="scrollHeader">
-    <nav class="scroll-header__inner">
-      <a href="index.html" class="scroll-header__logo">伏見管理サービス Careers</a>
-      <div class="scroll-header__nav">
-        <a href="jobs.html" class="scroll-header__link scroll-header__link--filled">募集職種<span style="margin-left:8px">→</span></a>
-        <a href="newgrads.html" class="scroll-header__link">中途採用<span style="margin-left:8px">→</span></a>
-      </div>
-    </nav>
+  <header class="scroll-header visible" id="scrollHeader">
+    <div class="scroll-header__inner">
+      <a href="jobs.html" class="hdr-btn hdr-btn--filled">
+        <span>募集職種</span>
+        <span class="hdr-btn__arrow">→</span>
+      </a>
+      <a href="newgrads.html" class="hdr-btn hdr-btn--outlined">
+        <span>新卒採用</span>
+        <span class="hdr-btn__arrow">→</span>
+      </a>
+      <button class="scroll-header__hamburger" id="hamburger" aria-label="メニュー">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
   </header>
 
   <main>
@@ -103,7 +109,7 @@
       </div></nav>
       <div class="footer-cta">
         <a href="jobs.html" class="footer-cta__btn footer-cta__btn--filled"><span>募集職種</span><span class="footer-cta__arrow">→</span></a>
-        <a href="newgrads.html" class="footer-cta__btn"><span>中途採用</span><span class="footer-cta__arrow">→</span></a>
+        <a href="newgrads.html" class="footer-cta__btn"><span>新卒採用</span><span class="footer-cta__arrow">→</span></a>
       </div>
     </div>
     <div class="footer-bottom">
@@ -122,3 +128,6 @@
   <script src="js/swup-init.js"></script>
 </body>
 </html>
+
+
+

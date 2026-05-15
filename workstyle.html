@@ -13,21 +13,21 @@
 <body class="page--sub">
 
   <div id="swup" class="transition-main">
-  <!-- ===== HEADER (scroll-triggered) ===== -->
+  <!-- ===== HEADER ===== -->
   <header class="scroll-header visible" id="scrollHeader">
-    <nav class="scroll-header__nav">
-      <a href="index.html" class="scroll-header__logo">伏見管理サービス Recruit</a>
-      <div class="scroll-header__links">
-        <a href="about.html">会社について</a>
-        <a href="culture.html">カルチャー</a>
-        <a href="workstyle.html" class="current">働く環境</a>
-        <a href="jobs.html">職種紹介</a>
-      </div>
-      <div class="scroll-header__cta">
-        <a href="jobs.html" class="scroll-header__btn">募集職種</a>
-        <a href="newgrads.html" class="scroll-header__btn scroll-header__btn--accent">中途採用</a>
-      </div>
-    </nav>
+    <div class="scroll-header__inner">
+      <a href="jobs.html" class="hdr-btn hdr-btn--filled">
+        <span>募集職種</span>
+        <span class="hdr-btn__arrow">→</span>
+      </a>
+      <a href="newgrads.html" class="hdr-btn hdr-btn--outlined">
+        <span>新卒採用</span>
+        <span class="hdr-btn__arrow">→</span>
+      </a>
+      <button class="scroll-header__hamburger" id="hamburger" aria-label="メニュー">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
   </header>
 
   <main>
@@ -420,3 +420,4 @@
   <script src="js/swup-init.js"></script>
 </body>
 </html>
+

@@ -74,8 +74,8 @@ small{font-size:.55em;font-weight:400}
    ========================================================== */
 .scroll-header{
   position:fixed;top:0;right:0;z-index:1000;
-  padding:clamp(12px,1.5vh,20px) clamp(16px,2vw,40px);
-  display:flex;align-items:center;
+  padding:clamp(32px,2.8vw,53px) clamp(16px,2vw,40px);
+  display:flex;align-items:center;gap:clamp(8px,.7vw,13px);
   opacity:0;pointer-events:none;
   transform:translateY(-10px);
   transition:opacity .4s var(--ease), transform .4s var(--ease);
@@ -84,25 +84,76 @@ small{font-size:.55em;font-weight:400}
   opacity:1;pointer-events:auto;transform:translateY(0);
 }
 .scroll-header__inner{
-  display:flex;align-items:center;gap:clamp(8px,1vw,16px);
+  display:flex;align-items:center;gap:clamp(8px,.7vw,13px);
 }
-.hero-cta--sm{
-  height:clamp(36px,4.5vh,44px);
-  padding:0 clamp(14px,1vw,20px);
-  font-size:clamp(12px,0.75vw,14px);
-  border-radius:6px;
+
+/* ── giftee-style CTA buttons ── */
+.hdr-btn{
+  display:inline-flex;align-items:center;justify-content:space-between;
+  gap:clamp(8px,.7vw,12px);
+  height:clamp(36px,2.1vw,40px);
+  min-width:clamp(160px,11.1vw,213px);
+  padding:0 clamp(16px,1.4vw,24px);
+  font-size:clamp(13px,.9vw,17.3px);
+  font-weight:500;
+  letter-spacing:.11em;
+  text-decoration:none;
+  border-radius:clamp(8px,.7vw,13.3px);
+  transition:opacity .3s ease, transform .3s ease;
+  position:relative;
+  overflow:hidden;
 }
+.hdr-btn:hover{opacity:.85}
+.hdr-btn__arrow{
+  font-size:clamp(14px,1vw,18px);
+  font-weight:300;
+  transition:transform .35s var(--ease);
+}
+.hdr-btn:hover .hdr-btn__arrow{transform:translateX(3px)}
+
+.hdr-btn--filled{
+  background:var(--c-primary-dd);
+  color:#fff;
+}
+.hdr-btn--filled .hdr-btn__arrow{color:var(--c-primary)}
+
+.hdr-btn--outlined{
+  background:rgba(255,255,255,.85);
+  -webkit-backdrop-filter:blur(8px);
+  backdrop-filter:blur(8px);
+  border:1px solid var(--c-border);
+  color:var(--c-dark);
+}
+.hdr-btn--outlined .hdr-btn__arrow{color:var(--c-primary)}
+
+/* ── Hero-internal right CTA (top-right, vertical stack) ── */
+.hero-right-cta{
+  position:fixed;
+  top:clamp(32px,2.8vw,53px);
+  right:clamp(16px,2vw,40px);
+  z-index:100;
+  display:flex;
+  flex-direction:column;
+  gap:clamp(8px,.7vw,13px);
+}
+.hero-right-cta .hdr-btn{
+  height:clamp(40px,2.8vw,53px);
+  min-width:clamp(160px,11.1vw,213px);
+}
+
+/* ── Hamburger menu button ── */
 .scroll-header__hamburger{
   display:flex;flex-direction:column;gap:5px;
-  width:clamp(36px,4.5vh,44px);height:clamp(36px,4.5vh,44px);
+  width:clamp(36px,4.2vw,80px);height:clamp(36px,2.1vw,40px);
   justify-content:center;align-items:center;
-  border-radius:8px;border:1px solid var(--c-border);
-  background:var(--c-white);
+  border-radius:clamp(8px,.7vw,13.3px);
+  border:none;
+  background:var(--c-primary-dd);
   cursor:pointer;
-  transition:border-color .3s;
+  transition:opacity .3s;
 }
-.scroll-header__hamburger:hover{border-color:var(--c-primary)}
-.scroll-header__hamburger span{display:block;width:16px;height:1.5px;background:var(--c-dark);border-radius:1px}
+.scroll-header__hamburger:hover{opacity:.85}
+.scroll-header__hamburger span{display:block;width:18px;height:1.5px;background:#fff;border-radius:1px}
 
 /* Mobile Menu */
 .mobile-menu{position:fixed;inset:0;z-index:2000;pointer-events:none;opacity:0;transition:opacity .35s}

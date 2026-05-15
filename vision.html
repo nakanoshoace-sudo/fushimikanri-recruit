@@ -12,14 +12,20 @@
 </head>
 <body>
   <div id="swup" class="transition-main">
-  <header class="scroll-header" id="scrollHeader">
-    <nav class="scroll-header__inner">
-      <a href="/" class="scroll-header__logo">伏見管理サービス Careers</a>
-      <div class="scroll-header__nav">
-        <a href="jobs.html" class="scroll-header__link">募集職種</a>
-        <a href="about.html" class="scroll-header__link">会社概要</a>
-      </div>
-    </nav>
+  <header class="scroll-header visible" id="scrollHeader">
+    <div class="scroll-header__inner">
+      <a href="jobs.html" class="hdr-btn hdr-btn--filled">
+        <span>募集職種</span>
+        <span class="hdr-btn__arrow">→</span>
+      </a>
+      <a href="newgrads.html" class="hdr-btn hdr-btn--outlined">
+        <span>新卒採用</span>
+        <span class="hdr-btn__arrow">→</span>
+      </a>
+      <button class="scroll-header__hamburger" id="hamburger" aria-label="メニュー">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
   </header>
 
   <section class="subpage-hero">
@@ -95,3 +101,4 @@
   <script src="js/swup-init.js"></script>
 </body>
 </html>
+
