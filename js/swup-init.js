@@ -60,6 +60,12 @@
   });
 
   function reinitPage() {
+    // Update Three.js background circle positions based on page type
+    const isSub = document.documentElement.classList.contains('page--sub');
+    if (typeof window._bg3dSetSubpage === 'function') {
+      window._bg3dSetSubpage(isSub);
+    }
+
     // Scroll header behavior
     const scrollHeader = document.getElementById('scrollHeader');
     const heroEl = document.querySelector('.hero');
