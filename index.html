@@ -12,6 +12,14 @@
 </head>
 <body>
 
+  <!-- ===== Fixed background layer (giftee-style: canvas + blur behind all content) ===== -->
+  <div class="bg-fixed">
+    <canvas class="hero-canvas" id="heroCanvas"></canvas>
+    <div class="hero-blur"></div>
+  </div>
+
+  <div id="swup" class="transition-main">
+
   <!-- ===== SCROLL HEADER — appears after scrolling past hero ===== -->
   <header class="scroll-header" id="scrollHeader">
     <div class="scroll-header__inner">
@@ -53,7 +61,7 @@
     <div class="hero-blur"></div>
   </div>
 
-  <main>
+  <main id="Main">
 
     <!-- ===== HERO — giftee exact layout ===== -->
     <section class="hero" id="hero">
@@ -401,6 +409,12 @@
     </div>
   </footer>
 
+  </div><!-- /#swup -->
+
   <script src="js/main.js"></script>
+
+  <!-- Swup: smooth page transitions (giftee-style) -->
+  <script src="https://unpkg.com/swup@4/dist/Swup.umd.js"></script>
+  <script src="js/swup-init.js"></script>
 </body>
 </html>

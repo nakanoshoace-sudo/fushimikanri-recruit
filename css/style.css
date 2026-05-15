@@ -2376,3 +2376,46 @@ img[loading="lazy"].img-loaded{
     height:160px;
   }
 }
+
+/* ══════════════════════════════════════════════════════════
+   SWUP — Page Transition Animations (giftee-style)
+   ══════════════════════════════════════════════════════════ */
+
+/* Main container fade transition */
+.transition-main {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.4s cubic-bezier(0.19, 1, 0.22, 1),
+              transform 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+/* Swup: leaving page — fade out + slight upward shift */
+html.is-animating .transition-main {
+  opacity: 0;
+  transform: translateY(-12px);
+}
+
+/* Swup: entering page — starts invisible, fades in */
+html.is-leaving .transition-main {
+  opacity: 0;
+  transform: translateY(12px);
+}
+
+/* Swup: transition timing override for entering */
+html.is-rendering .transition-main {
+  transition: opacity 0.5s cubic-bezier(0.19, 1, 0.22, 1) 0.05s,
+              transform 0.5s cubic-bezier(0.19, 1, 0.22, 1) 0.05s;
+}
+
+/* Ensure bg-fixed stays visible during transitions */
+.bg-fixed {
+  transition: none !important;
+}
+
+/* Smooth body overflow during transitions */
+html.is-animating {
+  overflow: hidden;
+}
+html.is-animating body {
+  overflow: hidden;
+}
