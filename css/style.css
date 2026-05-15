@@ -126,9 +126,9 @@ small{font-size:.55em;font-weight:400}
 }
 .hdr-btn--outlined .hdr-btn__arrow{color:var(--c-primary)}
 
-/* ── Hero-internal right CTA (top-right, vertical stack) ── */
+/* ── Hero-internal right CTA (top-right, vertical stack — NOT fixed) ── */
 .hero-right-cta{
-  position:fixed;
+  position:absolute;
   top:clamp(32px,2.8vw,53px);
   right:clamp(16px,2vw,40px);
   z-index:100;

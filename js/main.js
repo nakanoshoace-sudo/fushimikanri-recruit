@@ -12,10 +12,17 @@ document.addEventListener('DOMContentLoaded', () => {
   const scrollHeader = document.getElementById('scrollHeader');
   const scrollInd = document.querySelector('.scroll-indicator');
   const heroEl = document.querySelector('.hero');
+  const isSubpage = document.documentElement.classList.contains('page--sub');
   const onScroll = () => {
     const y = window.scrollY;
     const heroH = heroEl ? heroEl.offsetHeight : 600;
-    if (scrollHeader) scrollHeader.classList.toggle('visible', y > heroH * 0.7);
+    if (scrollHeader) {
+      if (isSubpage) {
+        scrollHeader.classList.add('visible');
+      } else {
+        scrollHeader.classList.toggle('visible', y > heroH * 0.7);
+      }
+    }
     if (scrollInd) scrollInd.classList.toggle('hidden', y > 300);
   };
   window.addEventListener('scroll', onScroll, { passive: true });
