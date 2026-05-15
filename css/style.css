@@ -240,8 +240,6 @@ small{font-size:.55em;font-weight:400}
 }
 .hero-cta--filled:hover{
   background:var(--c-primary-d);
-  transform:translateY(-2px);
-  box-shadow:0 4px 16px rgba(42,92,82,.25);
 }
 .hero-cta--outline{
   background:transparent;
@@ -251,7 +249,6 @@ small{font-size:.55em;font-weight:400}
 .hero-cta--outline:hover{
   border-color:var(--c-primary);
   color:var(--c-primary);
-  transform:translateY(-2px);
 }
 .hero-cta__arrow{
   font-family:var(--ff-en);
@@ -477,7 +474,13 @@ small{font-size:.55em;font-weight:400}
   border-radius:9999px;
   overflow:hidden;
 }
-.about-grid__message-photo img{width:100%;height:100%;object-fit:cover;display:block}
+.about-grid__message-photo img{
+  width:100%;height:100%;object-fit:cover;display:block;
+  transition:transform .4s cubic-bezier(.23,1,.32,1);
+}
+.about-grid__message:hover .about-grid__message-photo img{
+  transform:scale(1.1);
+}
 .about-grid__message-label{
   display:flex;align-items:center;gap:12px;
   font-family:var(--ff-head);
@@ -509,7 +512,9 @@ small{font-size:.55em;font-weight:400}
 }
 
 /* Blur card — giftee style */
+/* ── About card — giftee-exact hover (::after border fade + img scale) ── */
 .about-card{
+  position:relative;
   display:flex;align-items:center;
   gap:clamp(20px,2.5vw,40px);
   padding:clamp(16px,1.4vw,27px); /* giftee: ~27px */
@@ -519,22 +524,43 @@ small{font-size:.55em;font-weight:400}
   border-radius:clamp(8px,0.7vw,13px); /* giftee: 13.33px */
   text-decoration:none;
   min-height:clamp(160px,13.9vw,267px); /* giftee: 267px */
-  transition:all .35s var(--ease);
 }
-.about-card:hover{
-  transform:translateY(-4px);
-  box-shadow:0 8px 32px rgba(91,168,153,.1);
+/* giftee ::after — accent border overlay, fade on hover */
+.about-card::after{
+  content:"";
+  display:block;
+  position:absolute;
+  top:0;left:0;
+  width:calc(100% + 2px);
+  height:calc(100% + 2px);
+  border-radius:clamp(8px,0.7vw,13px);
+  pointer-events:none;
+  border:1px solid var(--c-primary);
+  margin:-1px;
+  opacity:0;
+  transition:opacity .4s cubic-bezier(.19,1,.22,1);
+}
+.about-card:hover::after{
+  opacity:1;
+  transition:opacity .5s cubic-bezier(.39,.575,.565,1);
 }
 
 /* Circle photo — bigger per user request (giftee 213px → 280px) */
 .about-card__photo{
-  width:clamp(140px,14.6vw,280px); /* user: bigger than giftee's 213px */
+  width:clamp(140px,14.6vw,280px);
   height:clamp(140px,14.6vw,280px);
   border-radius:9999px;
   overflow:hidden;
   flex-shrink:0;
 }
-.about-card__photo img{width:100%;height:100%;object-fit:cover;display:block}
+.about-card__photo img{
+  width:100%;height:100%;object-fit:cover;display:block;
+  transition:transform .4s cubic-bezier(.23,1,.32,1);
+}
+/* giftee: img scale(1.1) on card hover */
+.about-card:hover .about-card__photo img{
+  transform:scale(1.1);
+}
 
 /* Card text — horizontal (user request: no vertical writing) */
 .about-card__text{
@@ -543,7 +569,7 @@ small{font-size:.55em;font-weight:400}
 }
 .about-card__label{
   font-family:var(--ff-head);
-  font-size:clamp(20px,1.67vw,32px); /* giftee: 26.67px — user: bigger */
+  font-size:clamp(20px,1.67vw,32px);
   font-weight:600;
   color:var(--c-dark);
   line-height:1.4;
@@ -556,7 +582,7 @@ small{font-size:.55em;font-weight:400}
 }
 .about-card:hover .about-card__arrow{transform:translateX(4px)}
 
-/* Pill button (giftee: border 1px solid, br12px, 21.3px text) */
+/* ── Pill button — giftee-exact hover (color change only, no translateY) ── */
 .about-pill-btn{
   display:flex;align-items:center;justify-content:space-between;
   gap:24px;
@@ -564,21 +590,20 @@ small{font-size:.55em;font-weight:400}
   border:1px solid var(--c-border);
   border-radius:12px;
   font-family:var(--ff-head);
-  font-size:clamp(14px,1.11vw,21px); /* giftee: 21.33px */
+  font-size:clamp(14px,1.11vw,21px);
   font-weight:500;
   color:var(--c-dark);
   text-decoration:none;
-  min-width:clamp(200px,18vw,347px); /* giftee: 347px */
-  transition:all .35s var(--ease);
+  min-width:clamp(200px,18vw,347px);
+  transition:color .4s cubic-bezier(.075,.82,.165,1), border-color .4s cubic-bezier(.075,.82,.165,1);
 }
 .about-pill-btn:hover{
   border-color:var(--c-primary);color:var(--c-primary);
-  transform:translateY(-2px);box-shadow:0 4px 20px rgba(91,168,153,.1);
 }
 .about-pill-btn__arrow{
   font-family:var(--ff-en);font-size:clamp(18px,1.4vw,24px);
   font-weight:300;color:var(--c-accent);
-  transition:transform .35s var(--ease);
+  transition:transform .35s var(--ease), fill .4s cubic-bezier(.19,1,.22,1);
 }
 .about-pill-btn:hover .about-pill-btn__arrow{transform:translateX(4px)}
 
@@ -824,7 +849,7 @@ small{font-size:.55em;font-weight:400}
   background:transparent;
   text-decoration:none;
   color:inherit;
-  transition:border-color .35s var(--ease), background .35s var(--ease);
+  transition:border-color .4s cubic-bezier(.19,1,.22,1), background .4s cubic-bezier(.19,1,.22,1);
 }
 .jobs-card:hover{
   border-color:var(--c-primary);
@@ -1315,24 +1340,14 @@ img[loading="lazy"]{
 img[loading="lazy"].img-loaded{
   opacity:1;
 }
-/* Hover effects for link cards */
-.about-card, .jobs-card, .pos-card, .ws-child__link{
-  transition:transform .3s var(--ease), box-shadow .3s var(--ease);
-}
-.about-card:hover, .jobs-card:hover{
-  transform:translateY(-4px);
-  box-shadow:0 8px 32px rgba(0,0,0,.08);
-}
-.pos-card:hover{
-  transform:translateY(-3px);
-  box-shadow:0 6px 24px rgba(255,255,255,.12);
-}
-/* Image hover scale inside photo containers */
+/* Hover effects — giftee style (no translateY/box-shadow, use ::after border + img scale) */
+
+/* Image hover scale inside photo containers (giftee: scale 1.1, 0.4s cubic-bezier) */
 .culture-photo img, .culture-sub-photo img, .jobs-photo img, .ws-grid__img img{
-  transition:opacity .5s cubic-bezier(.39,.575,.565,1), transform .5s cubic-bezier(.23,1,.32,1);
+  transition:opacity .5s cubic-bezier(.39,.575,.565,1), transform .4s cubic-bezier(.23,1,.32,1);
 }
 .culture-photo:hover img, .jobs-photo:hover img, .ws-grid__img:hover img{
-  transform:scale(1.03);
+  transform:scale(1.1);
 }
 
 /* decorative */
