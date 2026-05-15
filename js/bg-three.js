@@ -303,7 +303,32 @@
     const h = container.clientHeight;
     renderer.setSize(w, h);
     uniforms.u_resolution.value.set(w * renderer.getPixelRatio(), h * renderer.getPixelRatio());
-    uniforms.u_aspectRatio.value = w / h;
+    const ar = w / h;
+    uniforms.u_aspectRatio.value = ar;
+
+    // Scale sizes by aspect ratio (giftee: size * ar → e.g. 0.80 * 2.016 = 1.613)
+    uniforms.u_sizeA.value     = ITEMS[0].size * ar;
+    uniforms.u_sizeB.value     = ITEMS[1].size * ar;
+    uniforms.u_sizeC.value     = ITEMS[2].size * ar;
+    uniforms.u_sizeWhite.value = ITEMS[3].size * ar;
+
+    // Centers: x = (item.x + size*0.5), y recalculated to match giftee's GL coordinate system
+    // giftee verified at ar=2.016: centerA=(0.42, 0.026), centerC=(0.69, -2.87)
+    // Formula derived: center.y = 1.0 - (item.y + item.size*0.5) * ar  (y-flip + aspect scale)
+    // Verify: A: 1.0 - (0.083+0.40)*2.016 = 1.0 - 0.974 = 0.026 ✅
+    // Verify: C: 1.0 - (1.45+0.47)*2.016 = 1.0 - 3.871 = -2.871 ✅
+    uniforms.u_circleCenter.value.set(
+      ITEMS[0].x + ITEMS[0].size * 0.5,
+      1.0 - (ITEMS[0].y + ITEMS[0].size * 0.5) * ar
+    );
+    uniforms.u_circleCenter2.value.set(
+      ITEMS[1].x + ITEMS[1].size * 0.5,
+      1.0 - (ITEMS[1].y + ITEMS[1].size * 0.5) * ar
+    );
+    uniforms.u_circleCenter3.value.set(
+      ITEMS[2].x + ITEMS[2].size * 0.5,
+      1.0 - (ITEMS[2].y + ITEMS[2].size * 0.5) * ar
+    );
   }
   onResize();
   window.addEventListener('resize', onResize);
