@@ -283,6 +283,60 @@ document.addEventListener('DOMContentLoaded', () => {
       endHex: '#2A5C52',
     });
   }
+
+  /* ══════════════════════════════════════════════════════════
+     OFFICE SLIDER (giftee-style prev/next horizontal scroll)
+     ══════════════════════════════════════════════════════════ */
+  const sliderTrack = document.getElementById('officeSlider');
+  const prevBtn = document.getElementById('officePrev');
+  const nextBtn = document.getElementById('officeNext');
+  if (sliderTrack && prevBtn && nextBtn) {
+    const slideW = () => {
+      const slide = sliderTrack.querySelector('.wsp-slider__slide');
+      if (!slide) return 800;
+      return slide.offsetWidth + parseInt(getComputedStyle(sliderTrack).gap || '27');
+    };
+    prevBtn.addEventListener('click', () => {
+      sliderTrack.scrollBy({ left: -slideW(), behavior: 'smooth' });
+    });
+    nextBtn.addEventListener('click', () => {
+      sliderTrack.scrollBy({ left: slideW(), behavior: 'smooth' });
+    });
+  }
+
+  /* ══════════════════════════════════════════════════════════
+     BAR CHART ANIMATION (fill bars on visible)
+     ══════════════════════════════════════════════════════════ */
+  const barFills = document.querySelectorAll('.wsp-bar__fill');
+  if (barFills.length) {
+    const barObs = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          const pct = e.target.dataset.pct || '0';
+          e.target.style.width = pct + '%';
+          barObs.unobserve(e.target);
+        }
+      });
+    }, { rootMargin: '0px 0px -50px 0px' });
+    barFills.forEach(b => barObs.observe(b));
+  }
+
+  /* ══════════════════════════════════════════════════════════
+     DATA CARD FADE-IN (data-fade attribute)
+     ══════════════════════════════════════════════════════════ */
+  const fadeCards = document.querySelectorAll('[data-fade]');
+  if (fadeCards.length) {
+    const fadeObs = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          fadeObs.unobserve(e.target);
+        }
+      });
+    }, { rootMargin: '0px 0px -80px 0px' });
+    fadeCards.forEach(c => fadeObs.observe(c));
+  }
+
 });
 
 /* ══════════════════════════════════════════════════════════
