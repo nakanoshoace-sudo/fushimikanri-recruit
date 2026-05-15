@@ -249,14 +249,16 @@
       }
     });
 
-    // Noise plate re-init
-    const noiseCanvas = document.querySelector('.noise-canvas');
-    if (noiseCanvas && typeof noisePlateAnimate === 'function') {
-      noiseCanvas.style.opacity = '1';
-      noisePlateAnimate(noiseCanvas, {
-        width: 100, height: 200,
-        durationMs: 1000, delayMs: 1500,
-        startHex: '#1a3d36', endHex: '#5BA899',
+    // Noise text clip re-init
+    const noiseTargets = document.querySelectorAll('.vchar--noise-target');
+    if (noiseTargets.length && typeof noiseTextClip === 'function') {
+      noiseTargets.forEach(el => {
+        el.style.backgroundImage = '';
+      });
+      noiseTextClip(noiseTargets, {
+        width: 40, height: 40,
+        durationMs: 1200, delayMs: 2800,
+        startHex: '#1a1a1a', endHex: '#5BA899',
       });
     }
   }

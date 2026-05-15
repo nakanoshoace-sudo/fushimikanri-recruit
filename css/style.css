@@ -325,7 +325,7 @@ small{font-size:.55em;font-weight:400}
   font-size:5.42vw;
   font-weight:700;
   line-height:1.08;
-  color:var(--c-primary-dd);
+  color:#1a1a1a;
   opacity:0;
   filter:blur(12px);
   transform:translateY(30px);
@@ -351,7 +351,7 @@ small{font-size:.55em;font-weight:400}
 }
 .hero-tagline__col--accent .vchar.vchar--in:nth-child(1),
 .hero-tagline__col--accent .vchar.vchar--in:nth-child(2){
-  color:var(--c-accent);
+  color:var(--c-primary);
 }
 
 /* giftee uses same size for ALL chars including っ and 。 */
@@ -2420,22 +2420,13 @@ html.is-animating body {
   overflow: hidden;
 }
 
-/* ── Noise Plate (giftee astro-noise-plate) ── */
-.vchar--noise-wrap{
-  position:relative;
-}
-.noise-overlay{
-  position:absolute;
-  top:0;
-  left:0;
-  width:100%;
-  height:200%;
-  z-index:2;
-  pointer-events:none;
-  overflow:hidden;
-}
-.noise-canvas{
-  display:block;
-  width:100%;
-  height:100%;
+/* ── Noise Plate (text-clipped canvas noise on "探求") ── */
+.vchar--noise-target{
+  /* Will be animated via JS: background-image set to canvas dataURL,
+     then background-clip:text reveals noise through letter shape */
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-size: cover;
+  background-position: center;
 }

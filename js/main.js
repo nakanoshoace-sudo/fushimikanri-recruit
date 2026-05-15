@@ -268,115 +268,99 @@ document.addEventListener('DOMContentLoaded', () => {
   /* ══════════════════════════════════════════════════════════
      12. NOISE PLATE — giftee astro-noise-plate reproduction
      ══════════════════════════════════════════════════════════ */
-  const noiseCanvas = document.querySelector('.noise-canvas');
-  if (noiseCanvas) {
-    // Delay until hero animations are underway
-    setTimeout(() => {
-      noisePlateAnimate(noiseCanvas, {
-        width: 100,
-        height: 200,
-        durationMs: 1000,
-        delayMs: 1500,
-        startHex: '#1a3d36', // dark opal green
-        endHex: '#5BA899',   // opal green primary
-      });
-    }, 0);
+  const noiseTargets = document.querySelectorAll('.vchar--noise-target');
+  if (noiseTargets.length) {
+    noiseTextClip(noiseTargets, {
+      width: 40,
+      height: 40,
+      durationMs: 1200,
+      delayMs: 2800,
+      startHex: '#1a1a1a',
+      endHex: '#5BA899',
+    });
   }
 });
 
 /* ══════════════════════════════════════════════════════════
-   NOISE PLATE — Canvas 2D Perlin noise color transition
-   (giftee astro-noise-plate exact reproduction)
+   NOISE TEXT CLIP — Perlin noise rendered into background-image,
+   clipped to letter shape via background-clip:text.
+   Pre-generates all frames upfront, then plays via setInterval.
    ══════════════════════════════════════════════════════════ */
-function noisePlateAnimate(canvas, opts) {
-  const w = opts.width ?? 100;
-  const h = opts.height ?? 200;
-  const dur = opts.durationMs ?? 1800;
+function noiseTextClip(targets, opts) {
+  const w = opts.width ?? 40;
+  const h = opts.height ?? 40;
+  const dur = opts.durationMs ?? 1200;
   const delay = opts.delayMs ?? 0;
-  const startHex = opts.startHex ?? '#341103';
-  const endHex = opts.endHex ?? '#e76746';
+  const startHex = opts.startHex ?? '#1a1a1a';
+  const endHex = opts.endHex ?? '#5BA899';
+  const totalFrames = 20;
 
-  const ctx = canvas.getContext('2d');
+  const offCanvas = document.createElement('canvas');
+  offCanvas.width = w;
+  offCanvas.height = h;
+  const ctx = offCanvas.getContext('2d', { willReadFrequently: true });
   if (!ctx) return;
 
-  const dpr = Math.max(1, Math.floor(window.devicePixelRatio || 1));
-  canvas.style.width = w + 'px';
-  canvas.style.height = h + 'px';
-  canvas.width = w * dpr;
-  canvas.height = h * dpr;
-
-  const W = canvas.width;
-  const H = canvas.height;
   const startC = hexToRgb(startHex);
   const endC = hexToRgb(endHex);
 
-  ctx.fillStyle = startHex;
-  ctx.fillRect(0, 0, W, H);
-
-  const imgData = ctx.createImageData(W, H);
-  const pixels = imgData.data;
-
-  // Pre-compute noise field (2D fbm)
-  const noiseField = new Float32Array(W * H);
+  // Pre-compute 2D noise field
+  const noiseField = new Float32Array(w * h);
   const seed1 = Math.random() * 1e9 | 0;
   const scale = 3.2;
-  for (let y = 0; y < H; y++) {
-    const ny = y / H * scale;
-    for (let x = 0; x < W; x++) {
-      const nx = x / W * scale;
-      noiseField[y * W + x] = fbm2d(nx, ny, seed1, 4);
+  for (let y = 0; y < h; y++) {
+    const ny = y / h * scale;
+    for (let x = 0; x < w; x++) {
+      noiseField[y * w + x] = fbm2d(x / w * scale, ny, seed1, 4);
     }
   }
 
-  const startTime = performance.now() + delay;
-  const seed2 = Math.random() * 1e9 | 0;
   const thresh = 0.035;
+  const arr = [...targets];
+  const imgData = ctx.createImageData(w, h);
+  const pixels = imgData.data;
 
-  function frame(now) {
-    const elapsed = now - startTime;
-    if (elapsed < 0) { requestAnimationFrame(frame); return; }
-
-    const t = clamp01(elapsed / dur);
-    const noiseAmp = smoothstep(0.05, 0.35, t) * (1 - smoothstep(0.8, 1, t));
-    const time3d = now * 0.001;
-    const timeZ = time3d * 0.55;
-
+  // Pre-generate all frames as dataURLs
+  const frames = [];
+  for (let f = 0; f <= totalFrames; f++) {
+    const t = f / totalFrames;
     let idx = 0;
-    for (let y = 0; y < H; y++) {
-      const ny = y / H * 6;
-      for (let x = 0; x < W; x++) {
-        const nx = x / W * 6;
+    for (let y = 0; y < h; y++) {
+      for (let x = 0; x < w; x++) {
         const nVal = noiseField[idx];
         const lerp = 1 - smoothstep(t - thresh, t + thresh, nVal);
-        const r = mix(startC.r, endC.r, lerp);
-        const g = mix(startC.g, endC.g, lerp);
-        const b = mix(startC.b, endC.b, lerp);
-
-        // Animated 3D noise for shimmer
-        const shimmer = (fbm3d(nx, ny, timeZ, seed2, 4) - 0.5) * 2 * (36 * noiseAmp);
-
-        pixels[idx * 4 + 0] = clampByte(r + shimmer);
-        pixels[idx * 4 + 1] = clampByte(g + shimmer);
-        pixels[idx * 4 + 2] = clampByte(b + shimmer);
+        pixels[idx * 4 + 0] = clampByte(mix(startC.r, endC.r, lerp));
+        pixels[idx * 4 + 1] = clampByte(mix(startC.g, endC.g, lerp));
+        pixels[idx * 4 + 2] = clampByte(mix(startC.b, endC.b, lerp));
         pixels[idx * 4 + 3] = 255;
         idx++;
       }
     }
-
     ctx.putImageData(imgData, 0, 0);
-
-    if (t < 1) {
-      requestAnimationFrame(frame);
-    } else {
-      ctx.fillStyle = endHex;
-      ctx.fillRect(0, 0, W, H);
-      // Fade out the canvas after animation completes
-      canvas.style.transition = 'opacity 0.6s ease';
-      canvas.style.opacity = '0';
-    }
+    frames.push(offCanvas.toDataURL('image/jpeg', 0.8));
   }
 
-  requestAnimationFrame(frame);
+  // Set initial frame
+  arr.forEach(el => { el.style.backgroundImage = 'url(' + frames[0] + ')'; });
+
+  // Play back after delay
+  setTimeout(function() {
+    var current = 0;
+    var interval = dur / totalFrames;
+    var timer = setInterval(function() {
+      current++;
+      if (current >= frames.length) {
+        clearInterval(timer);
+        arr.forEach(function(el) {
+          el.style.backgroundImage = 'linear-gradient(' + endHex + ',' + endHex + ')';
+        });
+        return;
+      }
+      arr.forEach(function(el) {
+        el.style.backgroundImage = 'url(' + frames[current] + ')';
+      });
+    }, interval);
+  }, delay);
 }
 
 // ── Noise helpers ──
