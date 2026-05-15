@@ -1562,6 +1562,47 @@ small{font-size:.55em;font-weight:400}
 .culture-code__item:hover .culture-code__item-image img{
   transform:scale(1.05);
 }
+
+/* ── Culture Code Visual Cards (giftee-style decorative circles) ── */
+.cc-visual{
+  width:100%;
+  height:clamp(170px,14.4vw,277px);
+  background:var(--c-primary-dd);        /* dark green instead of giftee's dark brown */
+  border-radius:clamp(6px,.7vw,13.3px);
+  position:relative;
+  overflow:hidden;
+}
+.cc-dot{
+  position:absolute;
+  border-radius:50%;
+  transition:transform .6s cubic-bezier(.23,1,.32,1);
+}
+.culture-code__item:hover .cc-dot{
+  transform:scale(1.1);
+}
+.cc-dot--white{ background:#fff; }
+.cc-dot--light{ background:rgba(91,168,153,.5); }   /* opal green 50% */
+.cc-dot--mid{   background:rgba(91,168,153,.8); }   /* opal green 80% */
+
+/* Pattern 1: vertical stack (center aligned, top→bottom: small→mid→large) */
+.cc-visual--1 .cc-dot--white{ width:18%; aspect-ratio:1; top:12%; left:50%; transform:translateX(-50%); }
+.cc-visual--1 .cc-dot--light{ width:22%; aspect-ratio:1; top:38%; left:50%; transform:translateX(-50%); }
+.cc-visual--1 .cc-dot--mid{   width:28%; aspect-ratio:1; top:64%; left:50%; transform:translateX(-50%); }
+
+/* Pattern 2: scattered (giftee's second card pattern) */
+.cc-visual--2 .cc-dot--white{ width:14%; aspect-ratio:1; top:42%; left:28%; }
+.cc-visual--2 .cc-dot--light{ width:24%; aspect-ratio:1; top:30%; left:52%; }
+.cc-visual--2 .cc-dot--mid{   width:18%; aspect-ratio:1; top:62%; left:40%; }
+
+/* Pattern 3: diagonal ascending */
+.cc-visual--3 .cc-dot--white{ width:16%; aspect-ratio:1; top:60%; left:20%; }
+.cc-visual--3 .cc-dot--light{ width:20%; aspect-ratio:1; top:35%; left:45%; }
+.cc-visual--3 .cc-dot--mid{   width:26%; aspect-ratio:1; top:15%; left:65%; }
+
+/* Pattern 4: triangle cluster */
+.cc-visual--4 .cc-dot--white{ width:22%; aspect-ratio:1; top:18%; left:38%; }
+.cc-visual--4 .cc-dot--light{ width:16%; aspect-ratio:1; top:50%; left:22%; }
+.cc-visual--4 .cc-dot--mid{   width:20%; aspect-ratio:1; top:50%; left:56%; }
 .culture-code__item-title{
   font-family:var(--ff-head);
   font-size:clamp(28px,2.22vw,42.7px);  /* giftee: 42.67px */
