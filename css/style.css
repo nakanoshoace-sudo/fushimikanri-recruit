@@ -1,4 +1,4 @@
-/* ==========================================================
+﻿/* ==========================================================
    伏見管理サービス 採用サイト  —  CSS v6 (giftee pixel-perfect)
    Theme : Opal Green  |  Model : careers.giftee.co.jp
    ========================================================== */
@@ -1276,13 +1276,13 @@ html.js .anim-up.visible{
   filter:blur(0);
 }
 /* Title variant: slideUp + blur (giftee hero title style) */
-html.js .anim-up--title{
+html.js .anim-up.anim-up--title{
   opacity:0;
   filter:blur(8px);
   transform:translateY(15%);
   transition:opacity .6s ease, filter .6s ease, transform .6s ease;
 }
-html.js .anim-up--title.visible{
+html.js .anim-up.anim-up--title.visible{
   opacity:1;
   filter:blur(0);
   transform:translateY(0);
@@ -2191,7 +2191,7 @@ img[loading="lazy"].img-loaded{
 }
 
 /* ── Card (link) — giftee measured positions ── */
-.about-card{
+.about-card-section .about-card{
   display:grid;
   /* giftee: 12 cols × 78.75px, gap 53.3px = 1532px total */
   grid-template-columns:repeat(12, 1fr);
@@ -2204,13 +2204,13 @@ img[loading="lazy"].img-loaded{
   transition:background .3s ease, box-shadow .3s ease;
   overflow:visible;
 }
-.about-card:hover{
+.about-card-section .about-card:hover{
   background:rgba(255,255,255,0.7);
   box-shadow:0 4px 24px rgba(0,0,0,.06);
 }
 
 /* Image — columns 1-6, spans all rows */
-.about-card__image{
+.about-card-section .about-card__image{
   grid-column:1 / 6;
   grid-row:1 / 4;
   display:flex;
@@ -2219,21 +2219,21 @@ img[loading="lazy"].img-loaded{
 }
 
 /* Circle clip */
-.about-card__circle{
+.about-card-section .about-card__circle{
   width:clamp(200px,23.3vw,448px);
   height:clamp(200px,23.3vw,448px);
   border-radius:9999px;
   overflow:hidden;
   flex-shrink:0;
 }
-.about-card__circle img{
+.about-card-section .about-card__circle img{
   width:100%;
   height:100%;
   object-fit:cover;
 }
 
 /* Title — columns 6-12 */
-.about-card__title{
+.about-card-section .about-card__title{
   grid-column:6 / 13;
   font-family:var(--ff-head);
   font-size:clamp(24px,2.22vw,42.7px);
@@ -2244,7 +2244,7 @@ img[loading="lazy"].img-loaded{
 }
 
 /* Lead — columns 6-12 */
-.about-card__lead{
+.about-card-section .about-card__lead{
   grid-column:6 / 13;
   font-size:clamp(14px,1.11vw,21.3px);
   line-height:clamp(24px,2.11vw,40.5px);
@@ -2254,13 +2254,13 @@ img[loading="lazy"].img-loaded{
 }
 
 /* Arrow icon — columns 6-12 */
-.about-card__icon{
+.about-card-section .about-card__icon{
   grid-column:6 / 13;
   color:var(--c-text);
   display:flex;
   align-items:center;
 }
-.about-card__icon svg{
+.about-card-section .about-card__icon svg{
   transition:transform .3s ease;
 }
 .about-card:hover .about-card__icon svg{
@@ -2326,24 +2326,24 @@ img[loading="lazy"].img-loaded{
 }
 
 /* Card image — fade in on load */
-.about-card__circle img{
+.about-card-section .about-card__circle img{
   opacity:0;
   transition:opacity .4s cubic-bezier(.39,.575,.565,1);
 }
-.about-card__circle img.loaded{
+.about-card-section .about-card__circle img.loaded{
   opacity:1;
 }
 
 /* Card image hover — slight scale */
-[data-hover-img] .about-card__circle img{
+.about-card-section [data-hover-img] .about-card__circle img{
   transition:opacity .4s cubic-bezier(.39,.575,.565,1), transform .4s cubic-bezier(.23,1,.32,1);
 }
-[data-hover-img]:hover .about-card__circle img.loaded{
+.about-card-section [data-hover-img]:hover .about-card__circle img.loaded{
   transform:scale(1.05);
 }
 
 /* Arrow icon hover — slide right */
-[data-hover-img]:hover .about-card__icon svg{
+.about-card-section [data-hover-img]:hover .about-card__icon svg{
   transform:translateX(6px);
 }
 
@@ -2355,23 +2355,23 @@ img[loading="lazy"].img-loaded{
   .about-sections-wrap{
     padding:0 24px 0 40px;
   }
-  .about-card{
+  .about-card-section .about-card{
     grid-template-columns:1fr;
     gap:20px;
     padding:24px;
   }
-  .about-card__image{
+  .about-card-section .about-card__image{
     grid-column:auto;
     grid-row:auto;
     padding-left:0;
   }
-  .about-card__circle{
+  .about-card-section .about-card__circle{
     width:200px;
     height:200px;
   }
-  .about-card__title,
-  .about-card__lead,
-  .about-card__icon{
+  .about-card-section .about-card__title,
+  .about-card-section .about-card__lead,
+  .about-card-section .about-card__icon{
     grid-column:auto;
   }
 }
@@ -2384,7 +2384,7 @@ img[loading="lazy"].img-loaded{
   .about-sections-wrap{
     padding:0 16px;
   }
-  .about-card__circle{
+  .about-card-section .about-card__circle{
     width:160px;
     height:160px;
   }

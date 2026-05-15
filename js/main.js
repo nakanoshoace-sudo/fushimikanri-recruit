@@ -242,12 +242,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
   /* ══════════════════════════════════════════════════════════
      10. SECTION TITLE — slideUp + blur on scroll
+         (initial hidden state handled by CSS:
+          html.js .anim-up.anim-up--title { opacity:0; ... }
+          Reveal via .visible class addition by IntersectionObserver)
      ══════════════════════════════════════════════════════════ */
-  document.querySelectorAll('.anim-up--title').forEach(el => {
-    el.style.opacity = '0';
-    el.style.filter = 'blur(8px)';
-    el.style.transform = 'translateY(15%)';
-  });
 
   /* ══════════════════════════════════════════════════════════
      11. PARALLAX PHOTO SECTIONS — subtle scroll parallax
