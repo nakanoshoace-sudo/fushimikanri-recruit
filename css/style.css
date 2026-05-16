@@ -1466,7 +1466,7 @@ small{font-size:.55em;font-weight:400}
   max-width:1000px;
   margin:0 auto;
 }
-.pos-card{
+.positions-card{
   display:flex;align-items:center;gap:12px;
   background:rgba(255,255,255,.08);
   border:1px solid rgba(255,255,255,.2);
@@ -1476,25 +1476,25 @@ small{font-size:.55em;font-weight:400}
   transition:background var(--dur) var(--ease),border-color var(--dur) var(--ease);
   text-decoration:none;
 }
-.pos-card:hover{
+.positions-card:hover{
   background:rgba(255,255,255,.15);
   border-color:rgba(255,255,255,.4);
 }
-.pos-card__body{flex:1}
-.pos-card__body h3{
+.positions-card__body{flex:1}
+.positions-card__body h3{
   font-family:var(--ff-head);
   font-size:clamp(14px,1.1vw,18px);
   font-weight:700;
   color:#fff;
   margin-bottom:4px;
 }
-.pos-card__tag{font-size:clamp(10px,.8vw,13px);color:rgba(255,255,255,.5)}
-.pos-card__arrow{
+.positions-card__tag{font-size:clamp(10px,.8vw,13px);color:rgba(255,255,255,.5)}
+.positions-card__arrow{
   font-family:var(--ff-en);font-size:clamp(16px,1.3vw,22px);
   color:var(--c-accent);
   transition:transform var(--dur) var(--ease);
 }
-.pos-card:hover .pos-card__arrow{transform:translateX(4px)}
+.positions-card:hover .positions-card__arrow{transform:translateX(4px)}
 @media(max-width:767px){.positions-cards{grid-template-columns:1fr}}
 
 /* ==========================================================
