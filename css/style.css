@@ -1716,7 +1716,7 @@ small{font-size:.55em;font-weight:400}
 /* Logo — col 1, x:53 */
 .gft-footer__logo{
   justify-self:start;
-  width:clamp(160px,11.1vw,213px);
+  white-space:nowrap;
 }
 /* Nav — col 2, x:515 */
 .gft-footer__nav{
