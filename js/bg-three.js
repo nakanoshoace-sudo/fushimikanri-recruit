@@ -287,7 +287,7 @@
     u_pixelRatio:          { value: renderer.getPixelRatio() },
     u_backColor:           { value: new THREE.Vector3(...BG_COLOR) },
     u_foreColor:           { value: new THREE.Vector3(...FORE_COLOR) },
-    u_blurSize:            { value: 0.15 },
+    u_blurSize:            { value: 0.02 },
     u_time:                { value: 0 },
     u_circleSize:          { value: 0.35 },
     u_circleEdge:          { value: 0.6 },

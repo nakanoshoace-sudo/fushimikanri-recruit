@@ -255,7 +255,7 @@ small{font-size:.55em;font-weight:400}
   font-family:var(--ff-en);
   font-size:clamp(11px,0.7vw,14px);
   font-weight:500;
-  color:var(--c-dark);
+  color:var(--c-primary-dd);
   letter-spacing:.06em;
 }
 .hero-sidenav{
@@ -349,7 +349,7 @@ small{font-size:.55em;font-weight:400}
   letter-spacing:1.7px;color:var(--c-black);
   margin-bottom:clamp(24px,4vh,52px);  /* giftee: ~53px gap between lead and desc */
 }
-.hero-lead__accent{color:var(--c-dark)}
+.hero-lead__accent{color:var(--c-primary-dd)}
 .hero-desc{max-width:27.6vw}
 .hero-desc p{
   font-family:var(--ff-head);
