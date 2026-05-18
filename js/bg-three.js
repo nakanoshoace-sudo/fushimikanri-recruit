@@ -12,7 +12,7 @@
   }
 
   // ── Config ──
-  const BG_COLOR   = [237/255, 247/255, 244/255]; // #EDF7F4
+  const BG_COLOR   = [1.0, 1.0, 1.0]; // #FFFFFF — pure white background
   const FORE_COLOR = [91/255, 168/255, 153/255];   // #5BA899
 
   const ITEMS = [
@@ -359,14 +359,8 @@
   onResize();
   window.addEventListener('resize', onResize);
 
-  // ── Mouse tracking (smoothed) ──
-  const mouseTarget = { x: 0.5, y: 0.5 };
+  // ── Mouse tracking disabled (static center) ──
   const mouseCurrent = { x: 0.5, y: 0.5 };
-  const damping = 8;
-  window.addEventListener('mousemove', (e) => {
-    mouseTarget.x = e.clientX;
-    mouseTarget.y = e.clientY;
-  });
 
   // ── Scroll parallax ──
   const parallaxFactor = 0.5;
@@ -383,10 +377,7 @@
     const dt = Math.min((now - lastTime) / 1000, 0.1);
     lastTime = now;
 
-    // Smooth mouse
-    const lerpFactor = 1 - Math.exp(-damping * dt);
-    mouseCurrent.x += (mouseTarget.x - mouseCurrent.x) * lerpFactor;
-    mouseCurrent.y += (mouseTarget.y - mouseCurrent.y) * lerpFactor;
+    // Static mouse position (cursor tracking disabled)
     uniforms.u_mouse.value.set(mouseCurrent.x, mouseCurrent.y);
 
     uniforms.u_time.value = now * 0.001;
