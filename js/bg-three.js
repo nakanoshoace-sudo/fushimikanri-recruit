@@ -231,20 +231,12 @@
       float bW = 1.0 - smoothstep(-u_blurSize*u_whiteBlurMultiplier, u_blurSize*u_whiteBlurMultiplier, baseSdfW); bW *= 1.2;
       float finalAlphaWhite = max(aW, bW);
 
-      // Gradient (inner -> outer)
-      float nd1 = clamp(dist1/max(r1,0.001), 0.0, 1.0);
-      float ga1 = (nd1<0.5) ? mix(1.0,0.7,nd1*2.0) : mix(0.7,0.0,(nd1-0.5)*2.0);
-      float ga2 = 0.0;
-      if (u_sizeB > 0.001) { float nd2=clamp(dist2/max(r2,0.001),0.0,1.0); ga2=(nd2<0.5)?mix(1.0,0.7,nd2*2.0):mix(0.7,0.0,(nd2-0.5)*2.0); }
-      float ga3 = 0.0;
-      if (u_sizeC > 0.001) { float nd3=clamp(dist3/max(r3,0.001),0.0,1.0); ga3=(nd3<0.5)?mix(1.0,0.7,nd3*2.0):mix(0.7,0.0,(nd3-0.5)*2.0); }
-      ga1 *= wA; ga2 *= wB; ga3 *= wC;
-      float gradAlpha = max(max(ga1, ga2), ga3);
+      // Gradient — disabled: circles are flat color, outside is pure white
+      float gradAlpha = 0.0;
 
-      // Final mix
+      // Final mix — circle area only, no bleed outside
       vec3 outColor = u_backColor;
-      vec3 foreBase = vec3(1.0);
-      vec3 foreColor = mix(u_foreColor, foreBase, gradAlpha);
+      vec3 foreColor = u_foreColor;
       outColor = mix(outColor, foreColor, clamp(finalAlphaFore, 0.0, 1.0));
       outColor = mix(outColor, vec3(1.0), clamp(finalAlphaWhite * u_whiteOpacity * fOpD, 0.0, 1.0));
 
