@@ -53,8 +53,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // 2d. Tagline character animation (giftee-exact: transition-based)
   const vchars = document.querySelectorAll('.vchar');
-  vchars.forEach((el, i) => {
-    const delay = 0.5 + i * 0.09;
+  vchars.forEach((el) => {
+    const idx = parseInt(el.style.getPropertyValue('--i')) || 0;
+    const delay = 0.5 + idx * 0.09;
     el.style.transitionDelay = `${delay}s, ${delay}s, ${delay}s`;
   });
   requestAnimationFrame(() => {
@@ -64,7 +65,8 @@ document.addEventListener('DOMContentLoaded', () => {
   });
   // Accent color delayed transition
   document.querySelectorAll('.hero-tagline__col--accent .vchar:nth-child(1), .hero-tagline__col--accent .vchar:nth-child(2)').forEach(el => {
-    const baseDelay = parseFloat(el.style.transitionDelay) || 0.5;
+    const idx = parseInt(el.style.getPropertyValue('--i')) || 0;
+    const baseDelay = 0.5 + idx * 0.09;
     el.style.transitionDelay = `${baseDelay}s, ${baseDelay}s, ${baseDelay}s, ${baseDelay + 1.3}s`;
   });
 
